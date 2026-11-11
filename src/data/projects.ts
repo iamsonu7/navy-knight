@@ -37,7 +37,7 @@ export const projects: Project[] = [
     discipline: 'Event architecture',
     year: '2026',
     lenses: ['business', 'ai', 'design'],
-    role: 'Chief architect and organiser, as President of BEC IIT Jammu',
+    role: 'Organiser, with the BEC IIT Jammu team',
     summary:
       'A national corporate-crisis boardroom simulation with zero AI tolerance, automated end to end behind the scenes.',
     cover: { figure: '74', caption: 'institutions', letter: 'Ι' },
@@ -106,12 +106,12 @@ export const projects: Project[] = [
   },
   {
     slug: 'bec-rebrand',
-    title: 'BEC rebrand and turnaround',
+    title: 'BEC rebrand and restructure',
     status: 'shipped',
     discipline: 'Brand system · Organisation design',
     year: '2026',
     lenses: ['design', 'business'],
-    role: 'President and lead brand designer, Budding Entrepreneurs Club',
+    role: 'Lead brand designer and team lead, Budding Entrepreneurs Club',
     summary:
       'A 28-person committee became 5 Captains, a brand kit was built from scratch, and E-Cell IIT Bombay became a partner.',
     cover: { figure: '28 → 5', caption: 'members to Captains', letter: 'Β' },

@@ -59,9 +59,8 @@ Levels and the scale are at the top of `src/scripts/sound.ts`.
 
 ## Still needed from Sonu
 
-- Real email address and social links (`src/data/site.ts`; currently placeholders)
-- The real domain (`astro.config.mjs` and `site.url`)
+- The real domain once there is one (`astro.config.mjs` and `site.url`)
+- Any other profiles to list next to LinkedIn (`socials` in `src/data/site.ts`)
 - Project images and process images for the case studies
 - A portrait or signature piece
-- Credit or permission for the reference paintings (`paintingCredit` in `src/data/site.ts`)
 - Confirm the tools list

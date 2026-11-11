@@ -8,7 +8,7 @@ const last = path.length - 1;
   <div class="wrap grid">
     <div class="glass strong pad bio">
       <p class="eyebrow">Story</p>
-      <h2 class="h2" id="story-title">From a farm in Mandsaur to a president’s chair</h2>
+      <h2 class="h2" id="story-title">A farm in Mandsaur, a hostel at eleven, and still climbing</h2>
       <p class="lede">
         I study Materials Science and Engineering at IIT Jammu. What I really study is how businesses scale, how
         brands earn trust, and how AI tools multiply what one person can do.
@@ -33,7 +33,7 @@ const last = path.length - 1;
     <div class="glass strong pad climb" data-climb>
       <div class="climb-head">
         <h3>The climb</h3>
-        <p>Six steps so far. Take them one at a time.</p>
+        <p>Six steps taken, one ahead. Take them one at a time.</p>
       </div>
       <div class="stairs" role="tablist" aria-label="Steps in Sonu’s story" aria-orientation="vertical">
         {
@@ -52,6 +52,7 @@ const last = path.length - 1;
                   aria-selected={i === 0 ? 'true' : 'false'}
                   tabindex={i === 0 ? 0 : -1}
                   data-step={i}
+                  data-upcoming={'upcoming' in p ? '' : undefined}
                   style={`--i:${i}`}
                 >
                   <span class="letter" aria-hidden="true">{p.letter}</span>
@@ -160,6 +161,12 @@ const last = path.length - 1;
   .stair:hover {
     background: rgba(237, 229, 220, 0.18);
     color: #fff;
+  }
+  .stair[data-upcoming] {
+    border-style: dashed;
+    border-bottom-width: 1px;
+    background: transparent;
+    font-style: italic;
   }
   .stair[data-climbed] {
     background: rgba(237, 229, 220, 0.16);

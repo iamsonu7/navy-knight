@@ -12,19 +12,12 @@ export const site = {
   positioning: 'Business × AI × Design',
   tagline: 'I think across disciplines. I build through execution.',
   intro:
-    'IIT Jammu undergraduate working where business strategy, AI workflow automation and brand systems meet. President of the Budding Entrepreneurs Club, turning ideas into platforms, boardroom simulations and working products.',
+    'IIT Jammu undergraduate working where business strategy, AI workflow automation and brand systems meet. Learning by building: events, automations, brand systems and small ventures, one project at a time.',
   thesis: ['Value over cost.', 'Execution over labels.', 'Learning through building.'],
 
-  // TODO(Sonu): replace these placeholders with your real address and profiles.
-  email: 'hello@example.com',
-  socials: [
-    { label: 'LinkedIn', href: '#' },
-    { label: 'Instagram', href: '#' },
-    { label: 'Behance', href: '#' },
-  ],
-
-  // Shown under the reference paintings. Fill in once you have the artists' names or permission.
-  paintingCredit: 'Background paintings: reference artwork, credit pending.',
+  email: 'patidarsonu098@gmail.com',
+  // Add more profiles here (e.g. Instagram, Behance) when you want them on the site.
+  socials: [{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/sonu-patidar/' }],
 };
 
 export const metrics = [
@@ -39,7 +32,7 @@ export const facts = [
   { k: 'Based in', v: 'IIT Jammu, J&K' },
   { k: 'From', v: 'Mandsaur, Madhya Pradesh' },
   { k: 'Studying', v: 'B.Tech, Materials Science & Engineering, class of 2029' },
-  { k: 'Currently', v: 'President, Budding Entrepreneurs Club' },
+  { k: 'Currently', v: 'Running BEC with a small team' },
   { k: 'Available for', v: 'Collaborations, partnerships, internships' },
 ];
 
@@ -84,8 +77,16 @@ export const path = [
     id: 'bec',
     letter: 'Ζ',
     place: 'Budding Entrepreneurs Club',
-    label: 'President',
-    text: 'Appointed on merit, without an interview. Before day one: 28 members became 5 Captains, a brand system was built from scratch, and a partnership with E-Cell IIT Bombay was signed.',
+    label: 'Where I am now',
+    text: 'Looking after the Budding Entrepreneurs Club this year. So far: a smaller core team of five, a brand system, and a partnership with E-Cell IIT Bombay. Still early, still learning how to run things well.',
+  },
+  {
+    id: 'next',
+    letter: 'Η',
+    place: 'What comes next',
+    label: 'Not yet climbed',
+    text: 'Taking ForgeX and the Big Idea Cohort from plans to something real people use, and learning to build teams that run without me in every detail.',
+    upcoming: true,
   },
 ];
 
@@ -116,7 +117,6 @@ export const craft = {
   ],
   recognition: [
     'Faculty commendation for the sponsorship automation engine',
-    'Appointed BEC President on merit, no interview',
     'Partners closed: J&K Bank, Dabur, Scaleon',
     'Institutional partnership with E-Cell IIT Bombay',
   ],
