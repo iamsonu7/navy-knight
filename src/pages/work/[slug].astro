@@ -1,0 +1,322 @@
+---
+import Base from '../../layouts/Base.astro';
+import Painting from '../../components/Painting.astro';
+import ProjectCover from '../../components/ProjectCover.astro';
+import { projects, lensLabels, type Project } from '../../data/projects';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: Project };
+const index = projects.indexOf(project);
+const next = projects[(index + 1) % projects.length];
+const prev = projects[(index - 1 + projects.length) % projects.length];
+const letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ'];
+---
+<Base title={`${project.title} · ${site.name}`} description={project.summary}>
+  <article class="section case">
+    <Painting name={project.bg} position="center 40%" tint={0.3} eager />
+    <div class="wrap stack">
+      <a class="pill back" href="/#works">
+        <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M15 10H5M9 6l-4 4 4 4" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg>
+        All works
+      </a>
+
+      <header class="glass strong pad intro">
+        <div class="intro-text">
+          <p class="eyebrow">{project.status === 'shipped' ? 'Shipped and measured' : 'Blueprint · in progress'}</p>
+          <h1>{project.title}</h1>
+          <p class="lede">{project.summary}</p>
+          <dl class="meta">
+            <div><dt>Role</dt><dd>{project.role}</dd></div>
+            <div><dt>Discipline</dt><dd>{project.discipline}</dd></div>
+            <div><dt>When</dt><dd>{project.year}</dd></div>
+            <div><dt>Lenses</dt><dd>{project.lenses.map((l) => lensLabels[l]).join(' · ')}</dd></div>
+          </dl>
+        </div>
+        <div class="intro-cover">
+          <ProjectCover project={project} index={index} large />
+        </div>
+      </header>
+
+      {
+        project.metrics && (
+          <ul class="glass metrics" aria-label="In numbers">
+            {project.metrics.map((m) => (
+              <li>
+                <span class="num">{m.value}</span>
+                <span class="label">{m.label}</span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      <section class="glass strong pad block" aria-labelledby="brief">
+        <h2 id="brief">The brief</h2>
+        <p class="lede">{project.challenge}</p>
+      </section>
+
+      <section class="glass strong pad block" aria-labelledby="moves">
+        <h2 id="moves">What I did</h2>
+        <ol class="moves">
+          {
+            project.moves.map((m, i) => (
+              <li>
+                <span class="gl" aria-hidden="true">{letters[i]}</span>
+                <div>
+                  <h3>{m.title}</h3>
+                  <p>{m.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      {
+        project.gallery && project.gallery.length > 0 && (
+          <section class="gallery" aria-label="Process">
+            {project.gallery.map((g) => (
+              <figure class="glass">
+                <img src={g.src} alt={g.alt} loading="lazy" />
+                {g.caption && <figcaption>{g.caption}</figcaption>}
+              </figure>
+            ))}
+          </section>
+        )
+      }
+
+      <section class="glass strong pad block outcome" aria-labelledby="outcome">
+        <h2 id="outcome">{project.status === 'shipped' ? 'The outcome' : 'Where it stands'}</h2>
+        <p class="lede">{project.outcome}</p>
+        {
+          project.partners && (
+            <ul class="partners" aria-label="Partners">
+              {project.partners.map((p) => <li class="chip">{p}</li>)}
+            </ul>
+          )
+        }
+      </section>
+
+      <nav class="glass pager" aria-label="More projects">
+        <a href={`/work/${prev.slug}`}><span>Previous</span>{prev.title}</a>
+        <a href={`/work/${next.slug}`} class="nxt"><span>Next</span>{next.title}</a>
+      </nav>
+
+      <footer class="glass foot">
+        <span>© {new Date().getFullYear()} {site.name}</span>
+        <a href="/#contact">Send word</a>
+      </footer>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .case {
+    min-height: 100svh;
+  }
+  .case :global(.painting) {
+    position: fixed;
+  }
+  .stack {
+    padding-top: 110px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .back {
+    align-self: flex-start;
+    background: rgba(8, 26, 82, 0.6);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+    animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .intro-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  h1 {
+    font-size: clamp(44px, 6vw, 72px);
+    line-height: 1.02;
+  }
+  .meta {
+    margin: 8px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    display: grid;
+    gap: 6px;
+    font-size: 18px;
+  }
+  .meta div {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+  }
+  .meta dt {
+    color: var(--text-3);
+  }
+  .meta dd {
+    margin: 0;
+  }
+  .metrics {
+    list-style: none;
+    margin: 0;
+    padding: 22px 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 18px;
+    background: var(--glass-bg-strong);
+  }
+  .metrics li {
+    display: flex;
+    flex-direction: column;
+  }
+  .num {
+    font: 44px/1.1 var(--display);
+  }
+  .label {
+    font-size: 17px;
+    color: var(--text-2);
+  }
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 900px;
+  }
+  .block h2 {
+    font-size: 40px;
+  }
+  .moves {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .moves li {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+  }
+  .gl {
+    font: 34px/1 var(--display);
+    color: var(--red-hi);
+  }
+  .moves h3 {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+  .moves p {
+    color: var(--text-2);
+    font-size: 19px;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+  .gallery figure {
+    margin: 0;
+    padding: 12px;
+  }
+  .gallery img {
+    border-radius: 14px;
+    width: 100%;
+  }
+  .gallery figcaption {
+    padding: 10px 6px 2px;
+    font-size: 17px;
+    color: var(--text-2);
+  }
+  .outcome {
+    border-color: rgba(242, 232, 196, 0.5);
+  }
+  .partners {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--glass-bg-strong);
+  }
+  .pager a {
+    display: flex;
+    flex-direction: column;
+    padding: 22px 28px;
+    color: #fff;
+    text-decoration: none;
+    font: 24px/1.25 var(--display);
+  }
+  .pager a span {
+    font: italic 16px var(--body);
+    color: var(--text-3);
+  }
+  .pager a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .pager .nxt {
+    text-align: right;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .foot {
+    border-radius: 999px;
+    padding: 14px 26px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 17px;
+    color: var(--text-2);
+    margin-bottom: 32px;
+    background: var(--glass-bg-strong);
+  }
+  @media (max-width: 1040px) {
+    .intro {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .intro-cover {
+      order: -1;
+    }
+  }
+  @media (max-width: 760px) {
+    .stack {
+      padding-top: 84px;
+    }
+    .meta div {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .gallery,
+    .pager {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .pager .nxt {
+      text-align: left;
+      border-left: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .block h2 {
+      font-size: 32px;
+    }
+  }
+</style>

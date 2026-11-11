@@ -1,0 +1,174 @@
+---
+import Painting from './Painting.astro';
+import ProjectCard from './ProjectCard.astro';
+import { projects, lensLabels, type Lens } from '../data/projects';
+import { explorations } from '../data/site';
+
+const shipped = projects.filter((p) => p.status === 'shipped');
+const labs = projects.filter((p) => p.status === 'lab');
+const lenses = Object.keys(lensLabels) as Lens[];
+---
+<section class="section" id="works" aria-labelledby="works-title">
+  <Painting name="column" position="center 30%" tint={0.24} />
+  <div class="wrap stack">
+    <div class="head">
+      <div class="glass head-panel">
+        <p class="eyebrow">Selected works</p>
+        <h2 class="h2" id="works-title">Numbers first, adjectives never</h2>
+        <p class="lede">What has shipped and been measured, kept apart from what is still a blueprint.</p>
+      </div>
+      <div class="glass lens-bar" role="group" aria-label="Filter by lens">
+        <span class="lens-label">Look through</span>
+        <button type="button" class="pill" data-lens="all" aria-pressed="true">Everything</button>
+        {lenses.map((l) => <button type="button" class="pill" data-lens={l} aria-pressed="false">{lensLabels[l]}</button>)}
+      </div>
+    </div>
+    <p class="sr-only" aria-live="polite" data-lens-status></p>
+
+    <div class="group" data-group>
+      <h3 class="group-title"><span class="dot shipped" aria-hidden="true"></span>Shipped and measured</h3>
+      <div class="cards">
+        {shipped.map((p) => <ProjectCard project={p} index={projects.indexOf(p)} />)}
+      </div>
+    </div>
+
+    <div class="group" data-group>
+      <h3 class="group-title"><span class="dot lab" aria-hidden="true"></span>Blueprints and labs</h3>
+      <div class="cards">
+        {labs.map((p) => <ProjectCard project={p} index={projects.indexOf(p)} />)}
+      </div>
+    </div>
+
+    <div class="glass strong pad desk">
+      <h3>Also on the desk</h3>
+      <ul>
+        {
+          explorations.map((e) => (
+            <li>
+              <strong>{e.title}</strong>
+              <span>{e.text}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  .head .head-panel {
+    background: var(--glass-bg-strong);
+  }
+  .lens-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 8px 8px 20px;
+    border-radius: 999px;
+    background: var(--glass-bg-strong);
+  }
+  .lens-label {
+    font-style: italic;
+    color: var(--text-2);
+    font-size: 17px;
+    margin-right: 6px;
+  }
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .group[hidden] {
+    display: none;
+  }
+  .group-title {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: rgba(8, 26, 82, 0.62);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: var(--glass-border);
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot.shipped {
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+  }
+  .dot.lab {
+    border: 1.5px solid var(--silver);
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+  .desk {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .desk h3 {
+    font-size: 27px;
+  }
+  .desk ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px 28px;
+  }
+  .desk li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 18px;
+    color: var(--text-2);
+  }
+  .desk strong {
+    font: 20px/1.3 var(--display);
+    color: #fff;
+  }
+
+  @media (max-width: 1040px) {
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 760px) {
+    .cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .lens-bar {
+      border-radius: 22px;
+      padding: 10px 12px;
+    }
+    .lens-label {
+      width: 100%;
+    }
+  }
+</style>

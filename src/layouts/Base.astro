@@ -1,0 +1,234 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const { title = site.title, description = site.description, image = '/og.jpg' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
+const ogImage = new URL(image, Astro.site ?? site.url);
+const onHome = Astro.url.pathname === '/';
+const href = (hash: string) => (onHome ? hash : `/${hash}`);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#081A52" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Marcellus&display=swap"
+    />
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="nav-shell" transition:persist="nav">
+      <nav class="nav glass" aria-label="Main">
+        <a class="logo" href="/" aria-label="Sonu Patidar, home">SONU</a>
+        <button class="menu" type="button" aria-expanded="false" aria-controls="nav-links" data-menu>Menu</button>
+        <div class="links" id="nav-links">
+          <a href={href('#works')}>Works</a>
+          <a href={href('#story')}>Story</a>
+          <a href={href('#craft')}>Craft</a>
+          <a href={href('#contact')}>Contact</a>
+        </div>
+        <button class="sound" type="button" data-sound-toggle aria-pressed="false">
+          <svg class="bars" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="9" width="2.4" height="6" rx="1.2"></rect>
+            <rect x="8" y="5" width="2.4" height="14" rx="1.2"></rect>
+            <rect x="13" y="7" width="2.4" height="10" rx="1.2"></rect>
+            <rect x="18" y="10" width="2.4" height="4" rx="1.2"></rect>
+          </svg>
+          <span data-sound-label>Sound off</span>
+        </button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>
+
+<style>
+  .nav-shell {
+    position: fixed;
+    top: 16px;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 0 var(--gutter);
+    pointer-events: none;
+  }
+  .nav {
+    pointer-events: auto;
+    max-width: var(--wrap);
+    margin: 0 auto;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 8px 6px 26px;
+    background: rgba(14, 34, 96, 0.5);
+  }
+  .logo {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.18em;
+    color: #fff;
+    text-decoration: none;
+  }
+  .links {
+    display: flex;
+    gap: 2px;
+    font-size: 18px;
+  }
+  .links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 999px;
+  }
+  .links a:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .menu {
+    display: none;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: transparent;
+    color: #fff;
+    font: 16px var(--body);
+    cursor: pointer;
+  }
+  .sound {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font: 16px var(--body);
+    cursor: pointer;
+  }
+  .sound:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+  .sound[aria-pressed='true'] {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .bars {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+  .bars rect {
+    transform-origin: center;
+    transform-box: fill-box;
+    transform: scaleY(0.35);
+    transition: transform 0.3s;
+  }
+  .sound[aria-pressed='true'] .bars rect {
+    animation: eq 1.2s ease-in-out infinite;
+  }
+  .sound[aria-pressed='true'] .bars rect:nth-child(2) {
+    animation-delay: -0.4s;
+  }
+  .sound[aria-pressed='true'] .bars rect:nth-child(3) {
+    animation-delay: -0.8s;
+  }
+  .sound[aria-pressed='true'] .bars rect:nth-child(4) {
+    animation-delay: -0.2s;
+  }
+  @keyframes eq {
+    0%,
+    100% {
+      transform: scaleY(0.4);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .nav-shell {
+      top: 10px;
+    }
+    .nav {
+      padding: 4px 4px 4px 18px;
+      gap: 4px;
+    }
+    .logo {
+      font-size: 18px;
+      letter-spacing: 0.14em;
+    }
+    .nav {
+      position: relative;
+    }
+    .menu {
+      display: inline-flex;
+      margin-left: auto;
+    }
+    .links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      padding: 10px;
+      border-radius: 22px;
+      background: rgba(10, 26, 80, 0.92);
+      border: var(--glass-border);
+      box-shadow: var(--glass-shadow);
+    }
+    .links.open {
+      display: flex;
+    }
+    .links a {
+      padding: 12px 16px;
+    }
+    .sound span {
+      display: none;
+    }
+    .sound {
+      padding: 8px 12px;
+    }
+  }
+</style>

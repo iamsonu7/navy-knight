@@ -1,0 +1,264 @@
+---
+import Painting from './Painting.astro';
+import { craft, principles } from '../data/site';
+const TOTAL = 412;
+---
+<section class="section" id="craft" aria-labelledby="craft-title">
+  <Painting name="temple" position="center 62%" tint={0.28} />
+  <div class="wrap stack">
+    <div class="glass head-panel strong">
+      <p class="eyebrow">Craft</p>
+      <h2 class="h2" id="craft-title">How the work gets made</h2>
+      <p class="lede">What I do, what I do it with, and the order I do it in.</p>
+    </div>
+
+    <div class="three">
+      <div class="glass strong pad-s">
+        <h3>Disciplines</h3>
+        <ul>{craft.disciplines.map((d) => <li>{d}</li>)}</ul>
+      </div>
+      <div class="glass strong pad-s">
+        <h3>Tools</h3>
+        <ul>{craft.tools.map((d) => <li>{d}</li>)}</ul>
+      </div>
+      <div class="glass strong pad-s">
+        <h3>Recognition</h3>
+        <ul>{craft.recognition.map((d) => <li>{d}</li>)}</ul>
+      </div>
+    </div>
+
+    <div class="glass strong pad process">
+      <h3>How a project unfolds</h3>
+      <ol class="steps">
+        {
+          craft.process.map((s) => (
+            <li>
+              <span class="gl" aria-hidden="true">{s.letter}</span>
+              <strong>{s.name}</strong>
+              <span>{s.text}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="duo">
+      <div class="glass strong pad engine" data-engine data-total={TOTAL}>
+        <div class="engine-head">
+          <h3>Try it yourself: 412 emails</h3>
+          <p>
+            Anhad’s sponsorship team used to write to every company by hand. Send a few the old way, then run the engine I
+            built in five days.
+          </p>
+        </div>
+        <div class="grid" aria-hidden="true" data-engine-grid></div>
+        <p class="count" aria-live="polite">
+          <span data-engine-count>0</span> / {TOTAL} companies reached
+          <span class="engine-note" data-engine-note></span>
+        </p>
+        <div class="engine-ctas">
+          <button type="button" class="pill" data-engine-hand>Send one by hand</button>
+          <button type="button" class="btn btn-red" data-engine-run>Run the engine</button>
+          <button type="button" class="pill" data-engine-reset hidden>Reset</button>
+        </div>
+      </div>
+
+      <div class="glass strong pad principles">
+        <h3>Five rules</h3>
+        <ol>
+          {
+            principles.map((p, i) => (
+              <li>
+                <span class="gl" aria-hidden="true">{['Ι', 'ΙΙ', 'ΙΙΙ', 'ΙV', 'V'][i]}</span>
+                <div>
+                  <strong>{p.name}</strong>
+                  <span>{p.text}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  h3 {
+    font-size: 27px;
+  }
+  .pad-s {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .three {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+  .three ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 19px;
+    color: #eef2fb;
+  }
+  .three li {
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .three li:last-child {
+    border-bottom: 0;
+  }
+
+  .process {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .steps li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+    padding-top: 16px;
+  }
+  .gl {
+    font: 36px/1 var(--display);
+    color: var(--red-hi);
+  }
+  .steps strong {
+    font-weight: 500;
+    font-size: 21px;
+  }
+  .steps span:last-child {
+    color: var(--text-2);
+    font-size: 18px;
+  }
+
+  .duo {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 28px;
+  }
+  .engine {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .engine-head p {
+    margin-top: 6px;
+    color: var(--text-2);
+    font-size: 18px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11px, 1fr));
+    gap: 4px;
+  }
+  .grid :global(i) {
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 2px;
+    background: rgba(237, 229, 220, 0.14);
+    transition: background 0.25s, box-shadow 0.25s;
+  }
+  .grid :global(i.hand) {
+    background: var(--silver);
+  }
+  .grid :global(i.sent) {
+    background: var(--gold);
+    box-shadow: 0 0 6px rgba(242, 232, 196, 0.6);
+  }
+  .count {
+    font-size: 19px;
+    color: var(--text-2);
+  }
+  .count span:first-child {
+    font: 30px/1 var(--display);
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .engine-note {
+    display: block;
+    font-style: italic;
+    color: var(--gold);
+    min-height: 1.6em;
+  }
+  .engine-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .principles {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .principles ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .principles li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .principles .gl {
+    font-size: 20px;
+  }
+  .principles strong {
+    display: block;
+    font: 20px/1.3 var(--display);
+  }
+  .principles li span:last-child {
+    font-size: 17px;
+    color: var(--text-2);
+  }
+
+  @media (max-width: 1040px) {
+    .three,
+    .duo {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 760px) {
+    .steps {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .pad-s {
+      padding: 26px 22px;
+    }
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(8px, 1fr));
+      gap: 3px;
+    }
+  }
+</style>

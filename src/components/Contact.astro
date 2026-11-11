@@ -1,0 +1,113 @@
+---
+import Painting from './Painting.astro';
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+<section class="section" id="contact" aria-labelledby="contact-title">
+  <Painting name="moon" position="center 20%" tint={0.18} />
+  <div class="wrap contact-wrap">
+    <div class="glass strong pad panel">
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-title">Send word</h2>
+      <p class="lede">
+        For a partnership, a sponsorship, an internship, or an idea that needs a builder, write to me and I’ll answer
+        within a few days.
+      </p>
+      <div class="mail-row">
+        <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
+        <button type="button" class="pill copy" data-copy={site.email}>
+          <span data-copy-label>Copy</span>
+        </button>
+      </div>
+      <ul class="socials" aria-label="Elsewhere">
+        {site.socials.map((s) => <li><a class="pill" href={s.href} rel="me noopener">{s.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+  <footer class="wrap foot-wrap">
+    <div class="glass foot">
+      <span>© {year} {site.name}</span>
+      <span class="credit">{site.paintingCredit}</span>
+      <a href="#top">Back to the top</a>
+    </div>
+  </footer>
+</section>
+
+<style>
+  .contact-wrap {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 260px;
+    padding-bottom: 80px;
+  }
+  .panel {
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  h2 {
+    font-size: clamp(48px, 6vw, 64px);
+    line-height: 1.05;
+  }
+  .mail-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  .mail {
+    font: 28px/1.3 var(--display);
+    color: var(--gold);
+    word-break: break-word;
+  }
+  .copy {
+    font-size: 15px;
+    min-height: 40px;
+    padding: 6px 16px;
+  }
+  .socials {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .foot-wrap {
+    padding-top: 0;
+    padding-bottom: 32px;
+  }
+  .foot {
+    border-radius: 999px;
+    padding: 14px 26px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px 16px;
+    font-size: 17px;
+    color: var(--text-2);
+    background: var(--glass-bg-strong);
+  }
+  .credit {
+    font-size: 15px;
+    font-style: italic;
+  }
+  .foot a {
+    color: #fff;
+  }
+  @media (max-width: 760px) {
+    .contact-wrap {
+      padding-top: 180px;
+    }
+    .mail {
+      font-size: 22px;
+    }
+    .foot {
+      border-radius: 22px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

@@ -1,0 +1,224 @@
+---
+import Painting from './Painting.astro';
+import { facts, path } from '../data/site';
+const last = path.length - 1;
+---
+<section class="section" id="story" aria-labelledby="story-title">
+  <Painting name="gateway" position="center 45%" tint={0.26} />
+  <div class="wrap grid">
+    <div class="glass strong pad bio">
+      <p class="eyebrow">Story</p>
+      <h2 class="h2" id="story-title">From a farm in Mandsaur to a president’s chair</h2>
+      <p class="lede">
+        I study Materials Science and Engineering at IIT Jammu. What I really study is how businesses scale, how
+        brands earn trust, and how AI tools multiply what one person can do.
+      </p>
+      <p class="body">
+        College is my testing ground, not a waiting room. Automating outreach to 412 companies, running a boardroom
+        simulation across 74 institutions, repositioning retail shops back home in Madhya Pradesh: the work changes,
+        the method doesn’t. Understand the system underneath, then build for real-world value.
+      </p>
+      <dl class="facts">
+        {
+          facts.map((f) => (
+            <div>
+              <dt>{f.k}</dt>
+              <dd>{f.v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <div class="glass strong pad climb" data-climb>
+      <div class="climb-head">
+        <h3>The climb</h3>
+        <p>Six steps so far. Take them one at a time.</p>
+      </div>
+      <div class="stairs" role="tablist" aria-label="Steps in Sonu’s story" aria-orientation="vertical">
+        {
+          path
+            .slice()
+            .reverse()
+            .map((p) => {
+              const i = path.indexOf(p);
+              return (
+                <button
+                  type="button"
+                  role="tab"
+                  class="stair"
+                  id={`step-${p.id}`}
+                  aria-controls="step-panel"
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  tabindex={i === 0 ? 0 : -1}
+                  data-step={i}
+                  style={`--i:${i}`}
+                >
+                  <span class="letter" aria-hidden="true">{p.letter}</span>
+                  <span class="place">{p.place}</span>
+                </button>
+              );
+            })
+        }
+      </div>
+      <div class="step-panel" id="step-panel" role="tabpanel" aria-labelledby={`step-${path[0].id}`} aria-live="polite">
+        {
+          path.map((p, i) => (
+            <div class="step-copy" data-step-copy={i} hidden={i !== 0}>
+              <p class="step-label">
+                <span aria-hidden="true">{p.letter}</span> {p.label}
+              </p>
+              <p>{p.text}</p>
+            </div>
+          ))
+        }
+        <button type="button" class="pill next" data-step-next>
+          <span data-next-label>Climb a step</span>
+          <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M4 14h4v-4h4V6h4" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: stretch;
+  }
+  .bio {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .body {
+    font-size: 19px;
+    color: var(--text-2);
+  }
+  .facts {
+    margin: 6px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 18px;
+  }
+  .facts div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .facts dt {
+    color: var(--text-3);
+  }
+  .facts dd {
+    margin: 0;
+    text-align: right;
+  }
+
+  .climb {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .climb-head h3 {
+    font-size: 30px;
+  }
+  .climb-head p {
+    color: var(--text-2);
+    font-size: 18px;
+  }
+  .stairs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  /* Each step sits further right the higher it is: a staircase */
+  .stair {
+    --w: calc(100% - var(--i) * 8%);
+    width: min(100%, var(--w));
+    margin-left: calc(100% - min(100%, var(--w)));
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 46px;
+    padding: 6px 16px;
+    border-radius: 10px 10px 4px 4px;
+    border: 1px solid rgba(237, 229, 220, 0.35);
+    border-bottom: 3px solid rgba(237, 229, 220, 0.55);
+    background: rgba(237, 229, 220, 0.08);
+    color: var(--text-2);
+    font: 17px/1.2 var(--body);
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s, transform 0.25s;
+  }
+  .stair:hover {
+    background: rgba(237, 229, 220, 0.18);
+    color: #fff;
+  }
+  .stair[data-climbed] {
+    background: rgba(237, 229, 220, 0.16);
+    color: #fff;
+  }
+  .stair[aria-selected='true'] {
+    background: var(--marble);
+    color: var(--navy);
+    border-color: var(--marble);
+    transform: translateY(-2px);
+  }
+  .letter {
+    font: 24px/1 var(--display);
+    color: var(--red-hi);
+    width: 22px;
+    text-align: center;
+  }
+  .stair[aria-selected='true'] .letter {
+    color: var(--red);
+  }
+  .step-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    min-height: 210px;
+  }
+  .step-copy {
+    animation: rise 0.45s ease-out both;
+  }
+  .step-label {
+    font: 22px/1.3 var(--display);
+    margin-bottom: 6px;
+  }
+  .step-label span {
+    color: var(--red-hi);
+  }
+  .step-copy p:last-child {
+    font-size: 19px;
+    color: var(--text-2);
+  }
+  .next {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
+  @media (max-width: 1040px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 760px) {
+    .facts dd {
+      text-align: left;
+    }
+    .stair {
+      --w: calc(100% - var(--i) * 6%);
+    }
+  }
+</style>
