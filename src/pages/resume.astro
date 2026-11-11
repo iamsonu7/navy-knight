@@ -1,0 +1,354 @@
+---
+import Base from '../layouts/Base.astro';
+import Painting from '../components/Painting.astro';
+import { resume } from '../data/resume';
+import { site, facts } from '../data/site';
+const location = facts.find((f) => f.k === 'Based in')?.v;
+---
+<Base title={`Résumé · ${site.name}`} description={`Résumé of ${site.name}: ${resume.headline}.`}>
+  <div class="section page">
+    <Painting name="column" dim={0.7} fixed />
+    <div class="wrap col">
+      <div class="bar">
+        <p class="eyebrow">The professional frame</p>
+        <div class="bar-actions">
+          <a class="pill" href="/story">Read the personal story</a>
+          <button type="button" class="btn btn-red" data-print>Save as PDF</button>
+        </div>
+      </div>
+
+      <article class="doc" aria-label="Résumé">
+        <header class="doc-head">
+          <div>
+            <h1>{site.name}</h1>
+            <p class="headline">{resume.headline}</p>
+          </div>
+          <ul class="contact">
+            <li>{location}</li>
+            <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+            {site.socials.map((s) => <li><a href={s.href} rel="me noopener">{s.href.replace('https://www.', '')}</a></li>)}
+          </ul>
+        </header>
+
+        <section class="block">
+          <h2>Summary</h2>
+          <p>{resume.summary}</p>
+        </section>
+
+        <ul class="figures" aria-label="Key figures">
+          <li><b>412</b> companies in one automated outreach pipeline</li>
+          <li><b>74</b> institutions and 306 participants at Investi-Case ’26</li>
+          <li><b>11/11</b> food vendor sponsorships closed</li>
+          <li><b>28 → 5</b> committee restructured into a core team</li>
+        </ul>
+
+        <div class="cols">
+          <div class="main">
+            <section class="block">
+              <h2>Experience and positions</h2>
+              {
+                resume.experience.map((x) => (
+                  <div class="item">
+                    <div class="item-head">
+                      <h3>
+                        {x.role}
+                        <span class="org">{x.org}</span>
+                      </h3>
+                      <span class="when">{x.when}</span>
+                    </div>
+                    <ul>
+                      {x.points.map((pt) => (
+                        <li>{pt}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              }
+            </section>
+
+            <section class="block">
+              <h2>Projects in progress</h2>
+              {
+                resume.projects.map((p) => (
+                  <div class="item compact">
+                    <div class="item-head">
+                      <h3>{p.name}</h3>
+                      <span class="when">{p.status}</span>
+                    </div>
+                    <p>{p.text}</p>
+                  </div>
+                ))
+              }
+            </section>
+          </div>
+
+          <aside class="side">
+            <section class="block">
+              <h2>Education</h2>
+              {
+                resume.education.map((e) => (
+                  <div class="edu">
+                    <h3>{e.place}</h3>
+                    <p>{e.detail}</p>
+                    {e.when && <p class="when">{e.when}</p>}
+                  </div>
+                ))
+              }
+            </section>
+            <section class="block">
+              <h2>Skills</h2>
+              {
+                resume.skills.map((g) => (
+                  <div class="skill">
+                    <h3>{g.group}</h3>
+                    <p>{g.items.join(' · ')}</p>
+                  </div>
+                ))
+              }
+            </section>
+            <section class="block">
+              <h2>Recognition</h2>
+              <ul>{resume.recognition.map((r) => <li>{r}</li>)}</ul>
+            </section>
+            <section class="block">
+              <h2>Writing</h2>
+              <ul>{resume.writing.map((r) => <li>{r}</li>)}</ul>
+            </section>
+          </aside>
+        </div>
+      </article>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .col {
+    padding-top: 110px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .bar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .bar .pill {
+    background: rgba(8, 26, 82, 0.6);
+  }
+
+  /* The document: calm, solid and readable, like paper on a dark desk */
+  .doc {
+    background: rgba(9, 24, 74, 0.9);
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: var(--radius);
+    padding: 56px 60px;
+    margin-bottom: 48px;
+    font-size: 18px;
+    line-height: 1.55;
+    animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .doc-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--red);
+  }
+  h1 {
+    font-size: clamp(40px, 5vw, 58px);
+    letter-spacing: 0.04em;
+  }
+  .headline {
+    font-style: italic;
+    color: var(--text-2);
+    font-size: 20px;
+    margin-top: 6px;
+  }
+  .contact {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    font-size: 17px;
+    color: var(--text-2);
+  }
+  .block {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  h2 {
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(201, 206, 216, 0.3);
+  }
+  h3 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+  .figures {
+    list-style: none;
+    margin: 28px 0 0;
+    padding: 18px 0;
+    border-top: 1px solid rgba(201, 206, 216, 0.3);
+    border-bottom: 1px solid rgba(201, 206, 216, 0.3);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    font-size: 16px;
+    color: var(--text-2);
+  }
+  .figures b {
+    display: block;
+    font: 32px/1.1 var(--display);
+    color: #fff;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: 48px;
+  }
+  .item {
+    padding: 8px 0 14px;
+  }
+  .item + .item {
+    border-top: 1px dashed rgba(201, 206, 216, 0.22);
+    padding-top: 16px;
+  }
+  .item-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .org {
+    display: block;
+    font: italic 17px/1.4 var(--body);
+    color: var(--text-3);
+  }
+  .when {
+    flex: none;
+    font-size: 15px;
+    color: var(--text-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .item ul,
+  .side ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+  }
+  .item li,
+  .side li {
+    margin: 4px 0;
+    color: #eef2fb;
+  }
+  .item li::marker,
+  .side li::marker {
+    color: var(--red-hi);
+  }
+  .compact p {
+    color: var(--text-2);
+    margin-top: 4px;
+  }
+  .edu,
+  .skill {
+    padding-bottom: 8px;
+  }
+  .edu p,
+  .skill p {
+    color: var(--text-2);
+  }
+  .skill h3,
+  .edu h3 {
+    font-size: 18px;
+  }
+
+  @media (max-width: 1040px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+    .figures {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 760px) {
+    .col {
+      padding-top: 84px;
+    }
+    .doc {
+      padding: 28px 20px;
+    }
+    .contact {
+      text-align: left;
+    }
+    .item-head {
+      flex-direction: column;
+      gap: 2px;
+    }
+  }
+
+  /* Printing gives a clean, black-on-white one-column-header résumé */
+  @media print {
+    :global(body) {
+      background: #fff !important;
+      color: #111 !important;
+      font-size: 11pt;
+    }
+    :global(.nav-shell),
+    :global(.skip),
+    :global(.wash),
+    .bar {
+      display: none !important;
+    }
+    .col {
+      padding: 0;
+    }
+    .doc {
+      background: #fff;
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+      color: #111;
+      animation: none;
+      font-size: 10.5pt;
+    }
+    .doc :is(h1, h3, li, b, p, .headline, .contact, .org, .when, .figures) {
+      color: #111 !important;
+    }
+    h2 {
+      color: #8a1d10 !important;
+      border-color: #999;
+    }
+    a {
+      color: #111;
+      text-decoration: none;
+    }
+    .cols {
+      grid-template-columns: 1.7fr 1fr;
+      gap: 28px;
+    }
+    .figures {
+      grid-template-columns: repeat(4, 1fr);
+      border-color: #999;
+    }
+    .item {
+      break-inside: avoid;
+    }
+  }
+</style>

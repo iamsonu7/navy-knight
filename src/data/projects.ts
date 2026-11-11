@@ -7,7 +7,8 @@
 
 export type Lens = 'business' | 'ai' | 'design';
 export type Status = 'shipped' | 'lab';
-export type Painting = 'sword' | 'gateway' | 'column' | 'temple' | 'moon';
+export type { Painting } from './paintings';
+import type { Painting } from './paintings';
 
 export interface Project {
   slug: string;
@@ -27,6 +28,7 @@ export interface Project {
   moves: { title: string; text: string }[];
   outcome: string;
   partners?: string[];
+  narrative: string[]; // the case study told in the first person
 }
 
 export const projects: Project[] = [
@@ -66,6 +68,13 @@ export const projects: Project[] = [
     ],
     outcome:
       'Reached 74 institutions, including 7 IITs and 6 IIMs, with 306 registered participants and a community of about 500 members.',
+    narrative: [
+      'Most college case competitions I had seen followed the same pattern: a PDF goes out, teams paste the problem into an AI tool, polished slides come back, and judges struggle to tell real thinking from generated text. Participation tends to come from a small circle of nearby colleges. I wanted to try building something that felt different to take part in.',
+      'We started with the identity. Investi-Case was framed as an investigation: a company in crisis, clues in the data, a boardroom waiting for your call. Visually, I mixed the mood of a modern corporate mystery with motifs from Dogra and Basohli art from the Jammu region, so the competition looked like it came from somewhere specific rather than from a template.',
+      'The second round was the heart of it: a live crisis boardroom with zero tolerance for AI tools. Teams had to think on their feet in front of evaluators, which is much closer to how real decisions get made.',
+      'Behind the scenes, I wrote Google Apps Script pipelines so the logistics would not swallow the team. Registration status emails went out automatically, Round 2 boardroom slots were scheduled across parallel volunteer note-taking sessions, and certificates were generated and sent the moment results were final.',
+      'It reached 306 registered participants from 74 institutions, including seven IITs and six IIMs, and left behind a community of around five hundred people. It was a team effort from start to finish, and it is the project where I most clearly saw an idea go all the way from a plan to measurable results.',
+    ],
   },
   {
     slug: 'sponsorship-engine',
@@ -103,6 +112,12 @@ export const projects: Project[] = [
     outcome:
       'Hundreds of hours of manual work removed, a faculty commendation for operational innovation, and partnerships closed with J&K Bank, Dabur and Scaleon.',
     partners: ['J&K Bank', 'Dabur', 'Scaleon'],
+    narrative: [
+      'When I took on sponsorship for Anhad, the inherited plan was a list of more than four hundred companies and the expectation that we would email each of them by hand. I could see what that would do to the team: weeks of copying, pasting and changing names, and very few replies at the end of it, because every email looked the same.',
+      'I had never automated anything before. I gave myself five days to learn Google Apps Script and how to call the OpenAI API from it. The pipeline I ended up with reads the company list, drafts an email written for that specific company, and sends it, keeping track of what has gone out.',
+      'The point was never to remove people from sponsorship. It was to remove the copying and pasting so the team could spend its time on calls, meetings and follow-ups, which is where deals are actually made. I led the pitching and designed the sponsor collateral for Anhad and for Convoquer ’26, our sports fest.',
+      'We closed partnerships with organisations including J&K Bank, Dabur and Scaleon, and the automation was appreciated by faculty. Before all of this, as a first-year volunteer, I had closed all eleven food vendor sponsorships I was given, and that ground-level experience of how sponsors think shaped how the emails were written.',
+    ],
   },
   {
     slug: 'bec-rebrand',
@@ -144,6 +159,13 @@ export const projects: Project[] = [
     outcome:
       'A smaller team that moves faster, a visual system every post now follows, and a national partner on day one.',
     partners: ['E-Cell IIT Bombay'],
+    narrative: [
+      'When I started looking after the Budding Entrepreneurs Club, it had two problems that fed each other. Very few students knew what it did, and the people inside it were spread across a committee of around twenty-eight, so nobody clearly owned anything.',
+      'The first change was structural. We moved to five Captains, each responsible for a clear area. A smaller group is easier to coordinate, and when something slips, it is obvious whose job it is to fix it.',
+      'The second was visual. I built a brand kit from scratch: Sora ExtraBold for headlines, Manrope SemiBold for subheadings and Inter for body text; a palette of Sky Blue #4DB6FF, Deep Navy #1E3A8A and Charcoal #111827; and two graphic patterns, the Angled Cut and the Curved Trail, taken from the logo. Templates mean any Captain can make a post that looks like it belongs.',
+      'The third was credibility. A partnership with E-Cell / NEC IIT Bombay put a well-known name next to ours for events, while BEC kept its own audience and decisions. With that in place we ran Investi-Case ’26 and a Founders Forum in September 2026, and I wrote and designed the first chapter of a BEC Design Thinking Handbook.',
+      'It is still a work in progress. The next step is writing down how things are done so the team can run without depending on me.',
+    ],
   },
   {
     slug: 'tinkerers-lab',
@@ -169,6 +191,11 @@ export const projects: Project[] = [
       },
     ],
     outcome: 'Two flagship events with a single, recognisable identity across every touchpoint.',
+    narrative: [
+      'Tinkerer’s Lab was where I first did design work that real crowds would see. The flagship events, Perjan / Pragyaan and Ujjemitsu, each needed an identity that would hold together from the first announcement poster to the last day of the event.',
+      'For each one I worked out a theme, chose the typography and set a colour system, then carried it through every piece: posters, custom merchandise and hoodies, and the physical ID cards participants wore.',
+      'Working across print, fabric and screen taught me that a design system is only as good as its weakest application. A palette that looks great on a poster has to survive being printed on a hoodie too.',
+    ],
   },
   {
     slug: 'big-idea-cohort',
@@ -205,6 +232,12 @@ export const projects: Project[] = [
     ],
     outcome:
       'A framework and rollout plan covering IIMs, NIT Hamirpur and Srinagar, and GFTIs like SMVDU, with a dual-value case for administration and sponsors. Not yet launched.',
+    narrative: [
+      'There are plenty of students in the region with real problems they want to solve, and very few routes that take a rough idea all the way to someone who could fund it. The Big Idea Cohort is my plan for one such route. It has not launched yet.',
+      'It works as an inverted funnel in three phases. First, the BEC Design Thinking Handbook goes out to 42+ schools and 15+ higher-education institutions, including IIMs, NIT Hamirpur and NIT Srinagar, and GFTIs like SMVDU, with the aim of collecting more than 1,500 raw problem statements.',
+      'Second, the top fifth of those are asked to explain their idea in a 60-second video, and the response on social media becomes part of the judging. Third, the best five teams pitch in a closed-door finale to angel investors and the campus incubation pipeline, I3C.',
+      'The design tries to give each group something real: students get a path, the administration gets regional reach, and sponsors get a pipeline of ideas. The honest next step is to run Phase 1 and find out which of my assumptions are wrong.',
+    ],
   },
   {
     slug: 'forgex',
@@ -230,6 +263,12 @@ export const projects: Project[] = [
       },
     ],
     outcome: 'Product architecture and an interactive HTML/CSS prototype. Next step: put it in front of real users.',
+    narrative: [
+      'Across institutes, people who can build things and people who can sell and plan them rarely meet. When they do, decisions about who to work with are often made on college name or grades before anyone has seen what the other person can do.',
+      'ForgeX is a platform idea to change that. Everyone gets an R-Resume Skill Card that shows what they can actually do. During the first round of matching, college name, GPA and gender are hidden on purpose, so the match is made on skills alone.',
+      'Collaborations run on a royalty-based model, so people who contribute to a project share in what it becomes. That gives everyone a reason to stay after the first meeting.',
+      'Right now ForgeX is a product architecture and an interactive HTML and CSS prototype. The next step is to put it in front of a small group of real users and learn from what they do with it.',
+    ],
   },
   {
     slug: 'shree-patidar',
@@ -255,6 +294,12 @@ export const projects: Project[] = [
       },
     ],
     outcome: 'Active in Sitamau, Nahargarh and Rupani Chauraha.',
+    narrative: [
+      'In semi-urban towns, most shops compete on one thing: price. That is a hard game to win, and it leaves customers who want something better with nowhere to go.',
+      'With Shree Patidar Home Decor, the work is to reposition the business from a conventional local shop into a premium interior transformation brand, a place you come to change how a room feels, not just to buy a product. Alongside it is Shree Patidar Electric Vehicles.',
+      'On the supply side, it means building B2B sourcing across Indore and Ahmedabad so that the range and the margins can support that positioning, in towns like Sitamau, Nahargarh and Rupani Chauraha.',
+      'It is ongoing work, and probably the most practical business education I have.',
+    ],
   },
   {
     slug: 'green-vent',
@@ -275,6 +320,10 @@ export const projects: Project[] = [
       },
     ],
     outcome: 'Developed for Inventex ’26.',
+    narrative: [
+      'Grain stored in rural India is regularly lost to moisture and pests before it ever reaches a market. Coming from a farming background, this is not an abstract problem to me.',
+      'Green Vent was a design-thinking project for Inventex ’26 that looked at grain spoilage and infestation in rural storage, starting from how grain is actually kept rather than from how textbooks say it should be.',
+    ],
   },
 ];
 

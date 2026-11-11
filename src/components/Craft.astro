@@ -1,10 +1,11 @@
 ---
 import Painting from './Painting.astro';
+import Plate from './Plate.astro';
 import { craft, principles } from '../data/site';
 const TOTAL = 412;
 ---
 <section class="section" id="craft" aria-labelledby="craft-title">
-  <Painting name="temple" position="center 62%" tint={0.28} />
+  <Painting name="temple" dim={0.55} />
   <div class="wrap stack">
     <div class="glass head-panel strong">
       <p class="eyebrow">Craft</p>
@@ -27,6 +28,7 @@ const TOTAL = 412;
       </div>
     </div>
 
+    <div class="proc-row">
     <div class="glass strong pad process">
       <h3>How a project unfolds</h3>
       <ol class="steps">
@@ -40,6 +42,8 @@ const TOTAL = 412;
           ))
         }
       </ol>
+    </div>
+      <Plate name="temple" numeral="VI" sizes="(max-width: 1040px) 92vw, 320px" class="proc-plate" />
     </div>
 
     <div class="duo">
@@ -121,7 +125,14 @@ const TOTAL = 412;
     border-bottom: 0;
   }
 
+  .proc-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 28px;
+    align-items: start;
+  }
   .process {
+    align-self: stretch;
     display: flex;
     flex-direction: column;
     gap: 22px;
@@ -131,7 +142,7 @@ const TOTAL = 412;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
   }
   .steps li {
@@ -241,6 +252,14 @@ const TOTAL = 412;
   }
 
   @media (max-width: 1040px) {
+    .proc-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .proc-row :global(.proc-plate) {
+      max-width: 420px;
+      width: 100%;
+      justify-self: center;
+    }
     .three,
     .duo {
       grid-template-columns: minmax(0, 1fr);

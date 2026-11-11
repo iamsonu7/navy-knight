@@ -1,0 +1,284 @@
+---
+import Base from '../layouts/Base.astro';
+import Painting from '../components/Painting.astro';
+import Plate from '../components/Plate.astro';
+import { chapters, storyIntro } from '../data/story';
+import { site } from '../data/site';
+---
+<Base title={`My story · ${site.name}`} description="The personal side: growing up in Mandsaur, leaving home at eleven for Navodaya, Kota, IIT Jammu, and what I am still learning.">
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+  <article class="section story">
+    <Painting name="gateway" dim={0.62} fixed />
+    <div class="wrap col">
+      <header class="glass strong pad head">
+        <p class="eyebrow">The personal frame</p>
+        <h1>{storyIntro.title}</h1>
+        <p class="lede">{storyIntro.lede}</p>
+        <nav class="toc" aria-label="Chapters">
+          <ol>
+            {
+              chapters.map((c) => (
+                <li>
+                  <a href={`#${c.id}`} data-toc={c.id}>
+                    <span class="n" aria-hidden="true">{c.numeral}</span>
+                    {c.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+        <p class="switch">Prefer the short version? <a href="/resume">Read the résumé</a>.</p>
+      </header>
+
+      {
+        chapters.map((c, i) => (
+          <section class:list={['chapter', { 'has-plate': c.plate, flip: i % 4 === 2 }]} id={c.id} aria-labelledby={`${c.id}-t`} data-chapter>
+            <div class="glass strong pad text">
+              <p class="kicker">
+                <span class="big" aria-hidden="true">{c.numeral}</span>
+                <span>{c.kicker}</span>
+              </p>
+              <h2 id={`${c.id}-t`}>{c.title}</h2>
+              {c.paragraphs.map((p, j) => (
+                <>
+                  <p class:list={['para', { first: j === 0 }]}>{p}</p>
+                  {c.quote && j === 0 && <blockquote>{c.quote}</blockquote>}
+                </>
+              ))}
+            </div>
+            {c.plate && (
+              <div class="plate-col">
+                <Plate name={c.plate.name} numeral={c.plate.numeral} sizes="(max-width: 1040px) 92vw, 400px" />
+              </div>
+            )}
+          </section>
+        ))
+      }
+
+      <footer class="glass strong pad end">
+        <h2>Thank you for reading this far</h2>
+        <p class="lede">
+          If something here made you want to talk, write to me at <a href={`mailto:${site.email}`}>{site.email}</a> or find
+          me on <a href={site.socials[0].href} rel="me noopener">LinkedIn</a>.
+        </p>
+        <div class="ctas">
+          <a class="btn btn-red" href="/#works">See the work</a>
+          <a class="btn btn-ghost" href="/resume">The professional frame</a>
+        </div>
+      </footer>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 60;
+  }
+  .progress span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform-origin: left;
+    transform: scaleX(var(--p, 0));
+    background: linear-gradient(90deg, var(--red), var(--gold));
+  }
+  .col {
+    padding-top: 110px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  .head {
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  h1 {
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 1;
+  }
+  .toc ol {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 18px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 24px;
+  }
+  .toc a {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 6px 8px;
+    border-radius: 8px;
+    color: var(--text-2);
+    text-decoration: none;
+    font-size: 18px;
+  }
+  .toc a:hover,
+  .toc a[aria-current='true'] {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .toc .n {
+    font: 15px var(--display);
+    color: var(--red-hi);
+    min-width: 34px;
+  }
+  .switch {
+    font-style: italic;
+    color: var(--text-2);
+    font-size: 18px;
+  }
+
+  .chapter {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+    scroll-margin-top: 100px;
+  }
+  .chapter.has-plate {
+    grid-template-columns: minmax(0, 1fr) 400px;
+  }
+  .chapter.has-plate.flip {
+    grid-template-columns: 400px minmax(0, 1fr);
+  }
+  .chapter.flip .plate-col {
+    order: -1;
+  }
+  .chapter:not(.has-plate) .text {
+    max-width: 860px;
+  }
+  .plate-col {
+    position: sticky;
+    top: 110px;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .kicker {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    font: 15px var(--display);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .kicker .big {
+    font-size: 40px;
+    letter-spacing: 0;
+    color: var(--red-hi);
+  }
+  h2 {
+    font-size: clamp(34px, 4.4vw, 50px);
+    line-height: 1.08;
+  }
+  .para {
+    font-size: 21px;
+    line-height: 1.75;
+    color: #eef2fb;
+    max-width: 40em;
+  }
+  .para.first::first-letter {
+    float: left;
+    font: 74px/0.8 var(--display);
+    padding: 8px 10px 0 0;
+    color: var(--marble);
+  }
+  blockquote {
+    margin: 10px 0;
+    padding: 6px 0 6px 24px;
+    border-left: 2px solid var(--red);
+    font: italic 27px/1.4 var(--body);
+    color: #fff;
+    max-width: 30em;
+  }
+  .end {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 860px;
+    margin-bottom: 40px;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 1040px) {
+    .chapter.has-plate,
+    .chapter.has-plate.flip {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .chapter.flip .plate-col {
+      order: 0;
+    }
+    .plate-col {
+      position: static;
+      max-width: 460px;
+      width: 100%;
+      justify-self: center;
+    }
+  }
+  @media (max-width: 760px) {
+    .col {
+      padding-top: 84px;
+      gap: 36px;
+    }
+    .toc ol {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .para {
+      font-size: 19px;
+      line-height: 1.7;
+    }
+    blockquote {
+      font-size: 22px;
+      padding-left: 16px;
+    }
+  }
+</style>
+
+<script>
+  // Reading progress and the chapter you are on
+  document.addEventListener('astro:page-load', () => {
+    const bar = document.querySelector<HTMLElement>('[data-progress]');
+    if (!bar) return;
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - innerHeight;
+      bar.style.setProperty('--p', String(h > 0 ? scrollY / h : 0));
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    const links = new Map([...document.querySelectorAll<HTMLAnchorElement>('[data-toc]')].map((a) => [a.dataset.toc!, a]));
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          links.forEach((a) => a.removeAttribute('aria-current'));
+          links.get(e.target.id)?.setAttribute('aria-current', 'true');
+        });
+      },
+      { rootMargin: '-40% 0px -55% 0px' },
+    );
+    document.querySelectorAll('[data-chapter]').forEach((c) => io.observe(c));
+    document.addEventListener('astro:before-swap', () => {
+      removeEventListener('scroll', onScroll);
+      io.disconnect();
+    }, { once: true });
+  });
+</script>

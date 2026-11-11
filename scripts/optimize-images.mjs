@@ -6,7 +6,7 @@ import path from 'node:path';
 
 const SRC = 'raw';
 const OUT = 'public/bg';
-const WIDTHS = [800, 1200, 2400]; // never upscale: widths above the source width are skipped
+const WIDTHS = [400, 800, 1200]; // sources are ~1200px wide; never upscale
 
 await mkdir(OUT, { recursive: true });
 for (const file of await readdir(SRC)) {

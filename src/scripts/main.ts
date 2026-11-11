@@ -26,6 +26,25 @@ document.addEventListener('click', (e) => {
     setSound(!isOn());
     return;
   }
+  const plate = t.closest<HTMLElement>('[data-plate-open]');
+  if (plate) {
+    const dlg = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+    const img = dlg?.querySelector<HTMLImageElement>('[data-lightbox-img]');
+    const cap = dlg?.querySelector<HTMLElement>('[data-lightbox-cap]');
+    if (dlg && img) {
+      img.src = plate.dataset.plateOpen || '';
+      img.alt = plate.dataset.plateAlt || '';
+      if (cap) cap.textContent = plate.dataset.plateTitle || '';
+      dlg.showModal();
+      play('whoosh');
+    }
+    return;
+  }
+  // click outside the image closes the lightbox
+  if (t.matches('[data-lightbox]')) {
+    (t as HTMLDialogElement).close();
+    return;
+  }
   const menu = t.closest<HTMLButtonElement>('[data-menu]');
   if (menu) {
     const links = document.getElementById('nav-links');
@@ -88,7 +107,29 @@ document.addEventListener('astro:page-load', () => {
   cards();
   engine();
   copyButtons();
+  plates();
+  printButtons();
 });
+
+/* Framed paintings lean slightly toward the pointer */
+function plates() {
+  if (!finePointer() || reduced()) return;
+  document.querySelectorAll<HTMLElement>('[data-plate] .frame').forEach((f) => {
+    f.addEventListener('pointermove', (e) => {
+      const r = f.getBoundingClientRect();
+      f.style.setProperty('--tx', `${(((e.clientX - r.left) / r.width - 0.5) * 5).toFixed(2)}deg`);
+      f.style.setProperty('--ty', `${(-((e.clientY - r.top) / r.height - 0.5) * 5).toFixed(2)}deg`);
+    });
+    f.addEventListener('pointerleave', () => {
+      f.style.setProperty('--tx', '0deg');
+      f.style.setProperty('--ty', '0deg');
+    });
+  });
+}
+
+function printButtons() {
+  document.querySelectorAll<HTMLButtonElement>('[data-print]').forEach((b) => b.addEventListener('click', () => window.print()));
+}
 
 /* Hero: the painting, the stars and the spear sit at different depths */
 function heroDepth() {
@@ -214,7 +255,7 @@ function constellation() {
   if (!sky) return;
   const stars = [...sky.querySelectorAll<HTMLButtonElement>('[data-star]')];
   const line = sky.querySelector<SVGPolylineElement>('[data-lines]');
-  const hint = sky.querySelector<HTMLElement>('[data-sky-hint]');
+  const hint = document.querySelector<HTMLElement>('[data-sky-hint]');
   const done = sky.querySelector<HTMLElement>('[data-sky-done]');
   const order: number[] = [];
 
@@ -238,7 +279,8 @@ function constellation() {
       s.setAttribute('aria-pressed', 'true');
       play('star', order.length - 1);
       redraw();
-      if (hint) hint.hidden = true;
+      const em = hint?.querySelector('em');
+      if (em) em.textContent = order.length === stars.length ? 'All five found.' : `${order.length} of ${stars.length} found.`;
       if (order.length === stars.length) {
         setTimeout(() => play('complete'), 250);
         if (done) done.hidden = false;

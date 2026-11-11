@@ -1,23 +1,31 @@
 ---
 import Painting from './Painting.astro';
 import { facts, path } from '../data/site';
-const last = path.length - 1;
 ---
-<section class="section" id="story" aria-labelledby="story-title">
-  <Painting name="gateway" position="center 45%" tint={0.26} />
+<section class="section" id="about" aria-labelledby="story-title">
+  <Painting name="gateway" dim={0.55} />
   <div class="wrap grid">
     <div class="glass strong pad bio">
-      <p class="eyebrow">Story</p>
+      <p class="eyebrow">About</p>
       <h2 class="h2" id="story-title">A farm in Mandsaur, a hostel at eleven, and still climbing</h2>
       <p class="lede">
-        I study Materials Science and Engineering at IIT Jammu. What I really study is how businesses scale, how
-        brands earn trust, and how AI tools multiply what one person can do.
+        I study Materials Science and Engineering at IIT Jammu. What I really spend my time learning is how businesses
+        grow, how brands earn people’s trust, and how AI tools can multiply what one person or a small team can do.
       </p>
       <p class="body">
-        College is my testing ground, not a waiting room. Automating outreach to 412 companies, running a boardroom
-        simulation across 74 institutions, repositioning retail shops back home in Madhya Pradesh: the work changes,
-        the method doesn’t. Understand the system underneath, then build for real-world value.
+        I grew up in a farming family in Mandsaur, left home at eleven for a residential Navodaya school, and went to
+        Kota on a scholarship before choosing to start at IIT Jammu straight away rather than spend another year
+        chasing a different name. Farming taught me that an idea only matters when it produces something useful, and
+        the hostel years taught me to figure things out on my own.
       </p>
+      <p class="body">
+        College is where I test that. I have automated sponsorship emails to 412 companies, helped run a case
+        competition that reached 74 institutions, designed identities for campus events, and worked on positioning
+        shops back home in Madhya Pradesh. The work keeps changing; the method mostly doesn’t: understand the system
+        underneath, then build the simplest thing that creates real value. I am still early, and still learning
+        how to finish what I start.
+      </p>
+      <p><a class="pill more" href="/story">Read the whole story, in ten chapters</a></p>
       <dl class="facts">
         {
           facts.map((f) => (

@@ -46,14 +46,14 @@ const href = (hash: string) => (onHome ? hash : `/${hash}`);
   <body>
     <a class="skip" href="#main">Skip to content</a>
 
-    <header class="nav-shell" transition:persist="nav">
+    <header class="nav-shell">
       <nav class="nav glass" aria-label="Main">
         <a class="logo" href="/" aria-label="Sonu Patidar, home">SONU</a>
         <button class="menu" type="button" aria-expanded="false" aria-controls="nav-links" data-menu>Menu</button>
         <div class="links" id="nav-links">
           <a href={href('#works')}>Works</a>
-          <a href={href('#story')}>Story</a>
-          <a href={href('#craft')}>Craft</a>
+          <a href="/story" aria-current={Astro.url.pathname.startsWith('/story') ? 'page' : undefined}>Story</a>
+          <a href="/resume" aria-current={Astro.url.pathname.startsWith('/resume') ? 'page' : undefined}>Résumé</a>
           <a href={href('#contact')}>Contact</a>
         </div>
         <button class="sound" type="button" data-sound-toggle aria-pressed="false">
@@ -71,6 +71,14 @@ const href = (hash: string) => (onHome ? hash : `/${hash}`);
     <main id="main">
       <slot />
     </main>
+
+    <dialog class="lightbox" data-lightbox aria-label="Painting">
+      <form method="dialog"><button class="close pill" aria-label="Close">Close</button></form>
+      <figure>
+        <img data-lightbox-img alt="" />
+        <figcaption data-lightbox-cap></figcaption>
+      </figure>
+    </dialog>
 
     <script>
       import '../scripts/main.ts';
@@ -120,6 +128,48 @@ const href = (hash: string) => (onHome ? hash : `/${hash}`);
   }
   .links a:hover {
     background: rgba(255, 255, 255, 0.16);
+  }
+  .links a[aria-current='page'] {
+    background: rgba(237, 229, 220, 0.18);
+    box-shadow: inset 0 -2px 0 var(--gold);
+  }
+  .lightbox {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    max-width: 96vw;
+    max-height: 96vh;
+    overflow: visible;
+  }
+  .lightbox::backdrop {
+    background: rgba(3, 10, 40, 0.88);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  .lightbox figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .lightbox img {
+    max-height: 84vh;
+    max-width: 92vw;
+    width: auto;
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  }
+  .lightbox figcaption {
+    font-style: italic;
+    color: var(--text-2);
+    text-align: center;
+    max-width: 60ch;
+  }
+  .lightbox form {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
   }
   .menu {
     display: none;

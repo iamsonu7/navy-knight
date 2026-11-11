@@ -1,11 +1,13 @@
 ---
 import Painting from './Painting.astro';
+import Plate from './Plate.astro';
 import { site } from '../data/site';
 const year = new Date().getFullYear();
 ---
 <section class="section" id="contact" aria-labelledby="contact-title">
-  <Painting name="moon" position="center 20%" tint={0.18} />
+  <Painting name="moon" dim={0.5} />
   <div class="wrap contact-wrap">
+    <Plate name="moon" numeral="VII" sizes="(max-width: 1040px) 92vw, 420px" class="c-plate" />
     <div class="glass strong pad panel">
       <p class="eyebrow">Contact</p>
       <h2 id="contact-title">Send word</h2>
@@ -34,13 +36,25 @@ const year = new Date().getFullYear();
 
 <style>
   .contact-wrap {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 260px;
+    display: grid;
+    grid-template-columns: 420px minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
     padding-bottom: 80px;
   }
+  @media (max-width: 1040px) {
+    .contact-wrap {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .contact-wrap :global(.c-plate) {
+      max-width: 420px;
+      width: 100%;
+      justify-self: center;
+      order: 1;
+    }
+  }
   .panel {
-    max-width: 580px;
+    max-width: 640px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -93,8 +107,8 @@ const year = new Date().getFullYear();
     color: #fff;
   }
   @media (max-width: 760px) {
-    .contact-wrap {
-      padding-top: 180px;
+    .mail-row {
+      gap: 8px;
     }
     .mail {
       font-size: 22px;

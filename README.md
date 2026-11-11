@@ -23,20 +23,30 @@ The output in `dist/` deploys as-is to Vercel or Netlify (framework preset: Astr
 | What | File |
 |---|---|
 | Name, tagline, metrics, facts, story steps, principles, tools, contact | `src/data/site.ts` |
-| Projects, which also become the case-study pages at `/work/<slug>` | `src/data/projects.ts` |
+| Projects, which also become the case-study pages at `/work/<slug>` (including each project's first-person `narrative`) | `src/data/projects.ts` |
+| The personal frame: the long story at `/story`, in chapters | `src/data/story.ts` |
+| The professional frame: the résumé at `/resume` (prints and saves as PDF) | `src/data/resume.ts` |
+| Painting titles and alt text | `src/data/paintings.ts` |
 | Source paintings (originals) | `raw/` |
-| Optimised paintings (AVIF and WebP, 800px and full width) | `public/bg/`, regenerate with `npm run images` |
+| Optimised paintings (AVIF and WebP at 400, 800 and full width) | `public/bg/`, regenerate with `npm run images` |
 | Project images (optional) | `public/work/`, then set `image` on the project |
 | Sound engine | `src/scripts/sound.ts` |
 | All interaction | `src/scripts/main.ts` |
 
 To add a project, add an object to `projects` in `src/data/projects.ts`. Without an `image`, the card shows a typographic cover built from `cover` (a key figure, a caption and a Greek letter).
 
+## How the paintings are used
+
+The source paintings are about 1200px wide, which is too small to stretch across a wide screen without looking soft. So each painting appears in two ways:
+
+- **Plates**: the painting shown sharp, in a frame, at a size its pixels can hold. Click any plate to see it larger.
+- **Washes**: behind each section, a small copy of a painting blurred on purpose and darkened, so the colour and mood carry through without pretending to be sharp.
+
 ## The playful layer
 
 - **Constellation**: five named stars in the hero sky. Each one is an operating principle. Light all five and the constellation closes with a chord.
 - **Shooting stars**: click empty sky in the hero.
-- **Depth**: the painting, a twinkling star layer and the red spear move at different depths with the pointer.
+- **Depth**: the framed painting and a twinkling star layer move at different depths with the pointer; framed paintings lean slightly toward the cursor.
 - **The climb**: the story is a staircase. Climb it step by step; each step plays a higher note.
 - **412 emails**: in Craft, send a few sponsorship emails "by hand", then run the engine and watch it do the other few hundred.
 - **Lenses**: filter the works by Business, AI or Design.
@@ -64,3 +74,4 @@ Levels and the scale are at the top of `src/scripts/sound.ts`.
 - Project images and process images for the case studies
 - A portrait or signature piece
 - Confirm the tools list
+- Confirm the dates in `src/data/resume.ts` (Head of Sponsorship: 2026; Tinkerer’s Lab and sponsorship volunteer: 2025 to 2026; BEC: 2026 to present)

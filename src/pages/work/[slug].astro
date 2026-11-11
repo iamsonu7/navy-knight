@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Painting from '../../components/Painting.astro';
 import ProjectCover from '../../components/ProjectCover.astro';
+import Plate from '../../components/Plate.astro';
 import { projects, lensLabels, type Project } from '../../data/projects';
 import { site } from '../../data/site';
 
@@ -17,7 +18,7 @@ const letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ'];
 ---
 <Base title={`${project.title} · ${site.name}`} description={project.summary}>
   <article class="section case">
-    <Painting name={project.bg} position="center 40%" tint={0.3} eager />
+    <Painting name={project.bg} dim={0.62} fixed />
     <div class="wrap stack">
       <a class="pill back" href="/#works">
         <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M15 10H5M9 6l-4 4 4 4" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg>
@@ -57,6 +58,16 @@ const letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ'];
       <section class="glass strong pad block" aria-labelledby="brief">
         <h2 id="brief">The brief</h2>
         <p class="lede">{project.challenge}</p>
+      </section>
+
+      <section class="tell" aria-labelledby="story">
+        <div class="glass strong pad block">
+          <h2 id="story">The story</h2>
+          {project.narrative.map((p, i) => <p class:list={['para', { first: i === 0 }]}>{p}</p>)}
+        </div>
+        <div class="tell-plate">
+          <Plate name={project.bg} sizes="(max-width: 1040px) 92vw, 380px" />
+        </div>
       </section>
 
       <section class="glass strong pad block" aria-labelledby="moves">
@@ -117,9 +128,6 @@ const letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ'];
 <style>
   .case {
     min-height: 100svh;
-  }
-  .case :global(.painting) {
-    position: fixed;
   }
   .stack {
     padding-top: 110px;
@@ -196,6 +204,31 @@ const letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ'];
   }
   .block h2 {
     font-size: 40px;
+  }
+  .tell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 40px;
+    align-items: start;
+  }
+  .tell .block {
+    max-width: none;
+  }
+  .tell-plate {
+    position: sticky;
+    top: 110px;
+  }
+  .para {
+    font-size: 20px;
+    line-height: 1.75;
+    color: #eef2fb;
+    max-width: 40em;
+  }
+  .para.first::first-letter {
+    float: left;
+    font: 68px/0.8 var(--display);
+    padding: 8px 10px 0 0;
+    color: var(--marble);
   }
   .moves {
     list-style: none;
@@ -296,6 +329,15 @@ const letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ'];
     }
     .intro-cover {
       order: -1;
+    }
+    .tell {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .tell-plate {
+      position: static;
+      max-width: 440px;
+      width: 100%;
+      justify-self: center;
     }
   }
   @media (max-width: 760px) {
