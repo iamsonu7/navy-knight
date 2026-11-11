@@ -287,3 +287,20 @@ a:hover {
   opacity: 0.5;
   cursor: default;
 }
+
+@media print {
+  :root {
+    color-scheme: light;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .wrap {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  .section {
+    overflow: visible !important;
+  }
+}

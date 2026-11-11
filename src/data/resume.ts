@@ -1,113 +1,119 @@
-// The professional frame: a résumé. Edit here; /resume reads from this file.
-// TODO(Sonu): check the dates marked with ‘(confirm)’ in the README.
+// The professional frame: a résumé in the standard campus-placement format.
+// Every bullet starts with an action verb and describes what *I* did, not what an event achieved.
+// TODO(Sonu): add CGPA / percentages and the Class 12 row when you want them shown.
+
+export interface Entry {
+  title: string;
+  sub: string; // organisation or tools
+  when: string;
+  points: string[];
+}
 
 export const resume = {
-  headline: 'B.Tech student, IIT Jammu · Business strategy, AI automation and brand systems',
-  summary:
-    'Second-year Materials Science and Engineering undergraduate at IIT Jammu who works across business strategy, AI workflow automation and visual design. I have automated personalised sponsorship outreach to 412 companies with Google Apps Script and the OpenAI API, helped run a national case competition that reached 306 participants from 74 institutions, and designed brand systems for student organisations and campus events. I learn new tools quickly when a problem calls for them, and I care about work that can be measured.',
+  degree: 'B.Tech, Materials Science and Engineering',
+  institute: 'Indian Institute of Technology Jammu',
+  location: 'Jammu, J&K',
 
   education: [
-    {
-      place: 'Indian Institute of Technology Jammu',
-      detail: 'B.Tech, Materials Science and Engineering',
-      when: 'Expected 2029',
-    },
-    {
-      place: 'Kota, Rajasthan',
-      detail: 'Engineering entrance preparation, on scholarship',
-      when: 'Before IIT Jammu',
-    },
-    {
-      place: 'Jawahar Navodaya Vidyalaya',
-      detail: 'Class 6 to 12, residential',
-      when: '',
-    },
-  ],
-
-  experience: [
-    {
-      role: 'President',
-      org: 'Budding Entrepreneurs Club (BEC), IIT Jammu',
-      when: '2026 to present',
-      points: [
-        'Restructured a 28-member committee into a five-person core team (“Captains”) with clear ownership of each area.',
-        'Designed the club’s brand system: type scale (Sora, Manrope, Inter), palette (#4DB6FF, #1E3A8A, #111827), logo-derived patterns and reusable post templates.',
-        'Set up an institutional partnership with E-Cell / NEC IIT Bombay for event credibility and reach, while BEC kept ownership of its audience.',
-        'Organised Investi-Case ’26: 306 registered participants from 74 institutions (incl. 7 IITs and 6 IIMs), with a live, no-AI crisis boardroom round.',
-        'Automated registration emails, Round 2 scheduling across volunteer slots and certificate delivery with Google Apps Script.',
-        'Ran the Founders Forum (September 2026) through cold outreach to founders; wrote and designed Chapter 1 of the BEC Design Thinking Handbook.',
-      ],
-    },
-    {
-      role: 'Head of Sponsorship',
-      org: 'Anhad (techno-cultural fest) and Convoquer ’26 (sports fest), IIT Jammu',
-      when: '2026',
-      points: [
-        'Replaced manual, one-by-one emailing of 412 corporate prospects with an automated pipeline that writes and sends a personalised email to each company.',
-        'Learned Google Apps Script and OpenAI API integration in five days to build it, with no prior automation background; commended by faculty.',
-        'Led sponsor pitching and designed sponsorship collateral; partnerships closed include J&K Bank, Dabur and Scaleon.',
-      ],
-    },
-    {
-      role: 'Lead Graphic Designer',
-      org: 'Tinkerer’s Lab, IIT Jammu',
-      when: '2025 to 2026',
-      points: [
-        'Created the complete visual identity for flagship events Perjan / Pragyaan and Ujjemitsu: theme, typography and colour system.',
-        'Designed event posters, custom merchandise and hoodies, and physical ID cards.',
-      ],
-    },
-    {
-      role: 'Sponsorship volunteer',
-      org: 'Campus fest sponsorship team (11 members), IIT Jammu',
-      when: '2025 to 2026',
-      points: ['Closed all 11 of the food vendor sponsorships assigned to me (11 of 11).'],
-    },
-    {
-      role: 'Branding and sourcing',
-      org: 'Shree Patidar Group, Madhya Pradesh',
-      when: 'Ongoing',
-      points: [
-        'Repositioning Shree Patidar Home Decor from a conventional local shop to a premium interior transformation brand.',
-        'B2B sourcing across Indore and Ahmedabad for Home Decor and Shree Patidar Electric Vehicles, serving Sitamau, Nahargarh and Rupani Chauraha.',
-      ],
-    },
+    { course: 'B.Tech, Materials Science and Engineering', place: 'Indian Institute of Technology Jammu', when: '2025 – 2029' },
+    { course: 'Class 10', place: 'Jawahar Navodaya Vidyalaya', when: '' },
   ],
 
   projects: [
     {
-      name: 'ForgeX',
-      status: 'Prototype',
-      text: 'Cross-institute platform matching technical builders with business strategists. Skill cards hide college, GPA and gender during first matching; royalty-based collaboration. HTML/CSS prototype.',
+      title: 'Sponsorship Outreach Automation',
+      sub: 'Google Apps Script, OpenAI API, Google Sheets, Gmail',
+      when: '2026',
+      points: [
+        'Built a pipeline that reads a prospect list of 412 companies from Google Sheets, generates a personalised email for each with the OpenAI API, sends it through Gmail and logs every send.',
+        'Replaced the sponsorship team’s manual, one-by-one emailing; learned Apps Script and the API from scratch in five days to deliver it.',
+        'Received appreciation from faculty for improving the team’s process.',
+      ],
     },
     {
-      name: 'The Big Idea Cohort',
-      status: 'Planned',
-      text: 'Three-phase regional entrepreneurship pipeline for 42+ schools and 15+ colleges: handbook-led problem capture (1,500+ target), 60-second video validation, closed investor finale.',
+      title: 'Event Operations Automation, Investi-Case ’26',
+      sub: 'Google Apps Script',
+      when: '2026',
+      points: [
+        'Automated registration status emails, Round 2 scheduling across parallel volunteer note-taking slots, and certificate generation and delivery for a national case competition.',
+      ],
     },
     {
-      name: 'Green Vent',
-      status: 'Inventex ’26',
-      text: 'Design-thinking project on grain spoilage and pest infestation in rural storage.',
+      title: 'ForgeX: skill-first collaboration platform (prototype)',
+      sub: 'HTML, CSS, product design',
+      when: '2026',
+      points: [
+        'Designed the product architecture for a platform that matches technical and business students across institutes.',
+        'Specified an anonymised skill card that hides college, GPA and gender during first matching; built an interactive HTML/CSS prototype.',
+      ],
     },
     {
-      name: 'Hardware research',
-      status: 'Exploration',
-      text: 'IoT smart-hive monitoring for Indian beekeeping; a passive bimetallic snap-wiper for solar panel dust.',
+      title: 'Green Vent: rural grain storage',
+      sub: 'Design thinking, Inventex ’26',
+      when: '2026',
+      points: ['Developed a design-thinking concept to reduce grain spoilage and pest infestation in rural storage.'],
     },
-  ],
+  ] as Entry[],
+
+  positions: [
+    {
+      title: 'President, Budding Entrepreneurs Club',
+      sub: 'IIT Jammu',
+      when: '2026 – present',
+      points: [
+        'Reorganised a large committee into a five-member core team with a clear owner for each function.',
+        'Designed the club’s brand system (type scale, palette, logo-derived patterns, templates) used across its communication.',
+        'Co-designed the format and visual identity of Investi-Case ’26, including a live crisis boardroom round with no AI tools allowed.',
+        'Wrote and designed Chapter 1 of the BEC Design Thinking Handbook.',
+      ],
+    },
+    {
+      title: 'Head of Sponsorship',
+      sub: 'Anhad (techno-cultural fest) and Convoquer ’26 (sports fest), IIT Jammu',
+      when: '2026',
+      points: [
+        'Led sponsor pitching and designed the sponsorship decks and collateral for both fests.',
+        'Introduced automated, personalised outreach to replace manual emailing (see Projects).',
+      ],
+    },
+    {
+      title: 'Lead Graphic Designer',
+      sub: 'Tinkerer’s Lab, IIT Jammu',
+      when: '2025 – 2026',
+      points: [
+        'Created the visual identities for flagship events Perjan / Pragyaan and Ujjemitsu: theme, typography and colour system.',
+        'Designed posters, merchandise and hoodies, and participant ID cards.',
+      ],
+    },
+    {
+      title: 'Sponsorship Team Member',
+      sub: 'Campus fest, IIT Jammu',
+      when: '2025 – 2026',
+      points: ['Closed all 11 food vendor sponsorships assigned to me.'],
+    },
+  ] as Entry[],
+
+  experience: [
+    {
+      title: 'Branding and Sourcing',
+      sub: 'Shree Patidar Group, Madhya Pradesh',
+      when: 'Ongoing',
+      points: [
+        'Working on repositioning Shree Patidar Home Decor from a conventional local shop towards an interior transformation brand.',
+        'Supporting B2B sourcing from Indore and Ahmedabad for the home decor and electric vehicle businesses.',
+      ],
+    },
+  ] as Entry[],
 
   skills: [
-    { group: 'Strategy', items: ['Business strategy', 'Partnerships and sponsorship', 'Organisation design', 'Event architecture'] },
-    { group: 'Automation', items: ['Google Apps Script', 'OpenAI API and LLM pipelines', 'Python'] },
-    { group: 'Design', items: ['Brand and visual systems', 'Typography and colour', 'Event and print design', 'HTML and CSS prototyping'] },
+    { k: 'Automation and AI', v: 'Google Apps Script, OpenAI API, prompt design, Google Workspace automation' },
+    { k: 'Programming', v: 'Python, HTML, CSS' },
+    { k: 'Design', v: 'Brand identity, typography, colour systems, print and merchandise design' },
+    { k: 'Business', v: 'Sponsorship sales, partnerships, market positioning, B2B sourcing' },
   ],
 
-  recognition: [
-    'Faculty commendation for the sponsorship automation pipeline',
-    'Partnerships closed with J&K Bank, Dabur and Scaleon',
-    'Institutional partnership with E-Cell / NEC IIT Bombay',
+  interests: [
+    { k: 'Writing', v: 'Poetry, behavioural psychology notes, the DB Web Method (lateral thinking)' },
+    { k: 'Research', v: 'IoT beehive monitoring; passive solar-panel cleaning mechanism' },
   ],
-
-  writing: ['Design Thinking Handbook, Chapter 1 (BEC)', 'The DB Web Method (lateral thinking framework)', 'The Gen Z Speaker (behavioural psychology notes)', 'Poetry'],
 };

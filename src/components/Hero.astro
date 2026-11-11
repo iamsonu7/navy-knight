@@ -1,6 +1,6 @@
 ---
 import Painting from './Painting.astro';
-import { site, metrics, principles } from '../data/site';
+import { site, focus, principles } from '../data/site';
 import { paintings } from '../data/paintings';
 
 // Named stars, placed on the painting's sky (percentages of the image). Order = constellation order.
@@ -83,15 +83,12 @@ const set = (ext: string) => p.widths.map((w) => `/bg/${p.base}-${w}.${ext} ${w}
       </figcaption>
     </figure>
 
-    <ul class="metrics glass strong" aria-label="In numbers">
+    <ul class="metrics glass strong" aria-label="What I work on">
       {
-        metrics.map((m) => (
+        focus.map((f, i) => (
           <li>
-            <span class="num-big">
-              <span data-count={m.value}>{m.value}</span>{m.suffix}
-            </span>
-            <span class="label">{m.label}</span>
-            <span class="note">{m.note}</span>
+            <span class="num-big"><span class="gl" aria-hidden="true">{['Α', 'Β', 'Γ'][i]}</span> {f.name}</span>
+            <span class="label">{f.text}</span>
           </li>
         ))
       }
@@ -359,8 +356,8 @@ const set = (ext: string) => p.widths.map((w) => `/bg/${p.base}-${w}.${ext} ${w}
     margin: 0;
     padding: 22px 28px;
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
   }
   .metrics li {
     display: flex;
@@ -374,8 +371,11 @@ const set = (ext: string) => p.widths.map((w) => `/bg/${p.base}-${w}.${ext} ${w}
     padding-left: 0;
   }
   .num-big {
-    font: 42px/1.1 var(--display);
-    font-variant-numeric: tabular-nums;
+    font: 26px/1.2 var(--display);
+  }
+  .gl {
+    color: var(--red-hi);
+    margin-right: 6px;
   }
   .label {
     font-size: 17px;
@@ -398,13 +398,7 @@ const set = (ext: string) => p.widths.map((w) => `/bg/${p.base}-${w}.${ext} ${w}
       width: 100%;
       justify-self: center;
     }
-    .metrics {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .metrics li:nth-child(4) {
-      border-left: 0;
-      padding-left: 0;
-    }
+
   }
   @media (max-width: 760px) {
     .hero-wrap {
@@ -415,7 +409,7 @@ const set = (ext: string) => p.widths.map((w) => `/bg/${p.base}-${w}.${ext} ${w}
       font-size: 22px;
     }
     .metrics {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       padding: 18px 20px;
     }
     .metrics li,
@@ -423,9 +417,7 @@ const set = (ext: string) => p.widths.map((w) => `/bg/${p.base}-${w}.${ext} ${w}
       border-left: 0;
       padding-left: 0;
     }
-    .num-big {
-      font-size: 34px;
-    }
+
     .tip {
       width: 210px;
     }

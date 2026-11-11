@@ -25,7 +25,7 @@ The output in `dist/` deploys as-is to Vercel or Netlify (framework preset: Astr
 | Name, tagline, metrics, facts, story steps, principles, tools, contact | `src/data/site.ts` |
 | Projects, which also become the case-study pages at `/work/<slug>` (including each project's first-person `narrative`) | `src/data/projects.ts` |
 | The personal frame: the long story at `/story`, in chapters | `src/data/story.ts` |
-| The professional frame: the résumé at `/resume` (prints and saves as PDF) | `src/data/resume.ts` |
+| The professional frame: a one-page résumé at `/resume` (Download PDF prints to a single A4 page) | `src/data/resume.ts` |
 | Painting titles and alt text | `src/data/paintings.ts` |
 | Source paintings (originals) | `raw/` |
 | Optimised paintings (AVIF and WebP at 400, 800 and full width) | `public/bg/`, regenerate with `npm run images` |
@@ -74,4 +74,4 @@ Levels and the scale are at the top of `src/scripts/sound.ts`.
 - Project images and process images for the case studies
 - A portrait or signature piece
 - Confirm the tools list
-- Confirm the dates in `src/data/resume.ts` (Head of Sponsorship: 2026; Tinkerer’s Lab and sponsorship volunteer: 2025 to 2026; BEC: 2026 to present)
+- Résumé (`src/data/resume.ts`): CGPA, Class 10 year and score, and a Class 12 row if you want them; confirm the role dates

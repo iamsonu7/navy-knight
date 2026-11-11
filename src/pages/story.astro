@@ -4,6 +4,7 @@ import Painting from '../components/Painting.astro';
 import Plate from '../components/Plate.astro';
 import { chapters, storyIntro } from '../data/story';
 import { site } from '../data/site';
+const roman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
 ---
 <Base title={`My story · ${site.name}`} description="The personal side: growing up in Mandsaur, leaving home at eleven for Navodaya, Kota, IIT Jammu, and what I am still learning.">
   <div class="progress" aria-hidden="true"><span data-progress></span></div>
@@ -20,7 +21,7 @@ import { site } from '../data/site';
               chapters.map((c) => (
                 <li>
                   <a href={`#${c.id}`} data-toc={c.id}>
-                    <span class="n" aria-hidden="true">{c.numeral}</span>
+                    <span class="n" aria-hidden="true">{roman[chapters.indexOf(c)]}</span>
                     {c.title}
                   </a>
                 </li>
@@ -36,7 +37,7 @@ import { site } from '../data/site';
           <section class:list={['chapter', { 'has-plate': c.plate, flip: i % 4 === 2 }]} id={c.id} aria-labelledby={`${c.id}-t`} data-chapter>
             <div class="glass strong pad text">
               <p class="kicker">
-                <span class="big" aria-hidden="true">{c.numeral}</span>
+                <span class="big" aria-hidden="true">{roman[i]}</span>
                 <span>{c.kicker}</span>
               </p>
               <h2 id={`${c.id}-t`}>{c.title}</h2>

@@ -1,6 +1,7 @@
 ---
 // Typographic cover used until a real project image is added in projects.ts
 import type { Project } from '../data/projects';
+import { statusLabels } from '../data/projects';
 interface Props {
   project: Project;
   index: number;
@@ -13,11 +14,11 @@ const angle = [90, 72, 108, 84, 96, 66, 114, 78][index % 8];
   project.image ? (
     <img class:list={['cover-img', { large }]} src={project.image.src} alt={project.image.alt} loading="lazy" />
   ) : (
-    <div class:list={['cover', { large }]} style={`--a:${angle}deg`} role="img" aria-label={`${project.title}: ${project.cover.figure} ${project.cover.caption}`}>
+    <div class:list={['cover', { large }]} style={`--a:${angle}deg`} role="img" aria-label={`${project.title}: ${project.cover.word}, ${project.cover.caption}`}>
       <span class="ghost" aria-hidden="true">{project.cover.letter}</span>
-      <span class="figure" aria-hidden="true">{project.cover.figure}</span>
+      <span class="figure" aria-hidden="true">{project.cover.word}</span>
       <span class="caption" aria-hidden="true">{project.cover.caption}</span>
-      <span class="status" aria-hidden="true">{project.status === 'shipped' ? 'Shipped' : 'In progress'}</span>
+      <span class="status" aria-hidden="true">{statusLabels[project.status]}</span>
     </div>
   )
 }
@@ -55,7 +56,7 @@ const angle = [90, 72, 108, 84, 96, 66, 114, 78][index % 8];
   }
   .figure {
     position: relative;
-    font: 64px/1 var(--display);
+    font: 46px/1.05 var(--display);
     color: var(--marble);
     letter-spacing: 0.02em;
   }
@@ -75,7 +76,7 @@ const angle = [90, 72, 108, 84, 96, 66, 114, 78][index % 8];
     color: var(--gold);
   }
   .large .figure {
-    font-size: clamp(64px, 10vw, 120px);
+    font-size: clamp(52px, 7vw, 88px);
   }
   .large .ghost {
     font-size: 380px;

@@ -1,121 +1,86 @@
 ---
 import Base from '../layouts/Base.astro';
 import Painting from '../components/Painting.astro';
-import { resume } from '../data/resume';
-import { site, facts } from '../data/site';
-const location = facts.find((f) => f.k === 'Based in')?.v;
+import { resume, type Entry } from '../data/resume';
+import { site } from '../data/site';
+
+const linkedin = site.socials.find((s) => s.label === 'LinkedIn');
+const sections: { title: string; items: Entry[] }[] = [
+  { title: 'Projects', items: resume.projects },
+  { title: 'Positions of responsibility', items: resume.positions },
+  { title: 'Other experience', items: resume.experience },
+];
 ---
-<Base title={`Résumé · ${site.name}`} description={`Résumé of ${site.name}: ${resume.headline}.`}>
+<Base title={`Résumé · ${site.name}`} description={`Résumé of ${site.name}, ${resume.degree}, ${resume.institute}.`}>
   <div class="section page">
-    <Painting name="column" dim={0.7} fixed />
+    <Painting name="column" dim={0.72} fixed />
     <div class="wrap col">
       <div class="bar">
-        <p class="eyebrow">The professional frame</p>
-        <div class="bar-actions">
-          <a class="pill" href="/story">Read the personal story</a>
-          <button type="button" class="btn btn-red" data-print>Save as PDF</button>
-        </div>
+        <a class="pill" href="/story">Read the personal story instead</a>
+        <button type="button" class="btn btn-red" data-print>Download PDF</button>
       </div>
 
-      <article class="doc" aria-label="Résumé">
-        <header class="doc-head">
-          <div>
-            <h1>{site.name}</h1>
-            <p class="headline">{resume.headline}</p>
-          </div>
-          <ul class="contact">
-            <li>{location}</li>
-            <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-            {site.socials.map((s) => <li><a href={s.href} rel="me noopener">{s.href.replace('https://www.', '')}</a></li>)}
-          </ul>
+      <article class="sheet" aria-label="Résumé">
+        <header class="top">
+          <h1>{site.name}</h1>
+          <p class="degree">{resume.degree} · {resume.institute}</p>
+          <p class="contact">
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+            {linkedin && (<><span aria-hidden="true">|</span><a href={linkedin.href}>{linkedin.href.replace('https://www.', '').replace(/\/$/, '')}</a></>)}
+            <span aria-hidden="true">|</span>
+            <span>{resume.location}</span>
+          </p>
         </header>
 
-        <section class="block">
-          <h2>Summary</h2>
-          <p>{resume.summary}</p>
+        <section>
+          <h2>Education</h2>
+          <table class="edu">
+            <thead>
+              <tr><th scope="col">Programme</th><th scope="col">Institution</th><th scope="col">Year</th></tr>
+            </thead>
+            <tbody>
+              {resume.education.map((e) => (
+                <tr><td>{e.course}</td><td>{e.place}</td><td>{e.when}</td></tr>
+              ))}
+            </tbody>
+          </table>
         </section>
 
-        <ul class="figures" aria-label="Key figures">
-          <li><b>412</b> companies in one automated outreach pipeline</li>
-          <li><b>74</b> institutions and 306 participants at Investi-Case ’26</li>
-          <li><b>11/11</b> food vendor sponsorships closed</li>
-          <li><b>28 → 5</b> committee restructured into a core team</li>
-        </ul>
+        {
+          sections.map((sec) => (
+            <section>
+              <h2>{sec.title}</h2>
+              {sec.items.map((x) => (
+                <div class="entry">
+                  <div class="row">
+                    <h3>{x.title}</h3>
+                    <span class="when">{x.when}</span>
+                  </div>
+                  <p class="sub">{x.sub}</p>
+                  <ul>
+                    {x.points.map((pt) => (
+                      <li>{pt}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </section>
+          ))
+        }
 
-        <div class="cols">
-          <div class="main">
-            <section class="block">
-              <h2>Experience and positions</h2>
-              {
-                resume.experience.map((x) => (
-                  <div class="item">
-                    <div class="item-head">
-                      <h3>
-                        {x.role}
-                        <span class="org">{x.org}</span>
-                      </h3>
-                      <span class="when">{x.when}</span>
-                    </div>
-                    <ul>
-                      {x.points.map((pt) => (
-                        <li>{pt}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))
-              }
-            </section>
+        <section>
+          <h2>Skills</h2>
+          <dl class="kv">
+            {resume.skills.map((s) => (<><dt>{s.k}</dt><dd>{s.v}</dd></>))}
+          </dl>
+        </section>
 
-            <section class="block">
-              <h2>Projects in progress</h2>
-              {
-                resume.projects.map((p) => (
-                  <div class="item compact">
-                    <div class="item-head">
-                      <h3>{p.name}</h3>
-                      <span class="when">{p.status}</span>
-                    </div>
-                    <p>{p.text}</p>
-                  </div>
-                ))
-              }
-            </section>
-          </div>
-
-          <aside class="side">
-            <section class="block">
-              <h2>Education</h2>
-              {
-                resume.education.map((e) => (
-                  <div class="edu">
-                    <h3>{e.place}</h3>
-                    <p>{e.detail}</p>
-                    {e.when && <p class="when">{e.when}</p>}
-                  </div>
-                ))
-              }
-            </section>
-            <section class="block">
-              <h2>Skills</h2>
-              {
-                resume.skills.map((g) => (
-                  <div class="skill">
-                    <h3>{g.group}</h3>
-                    <p>{g.items.join(' · ')}</p>
-                  </div>
-                ))
-              }
-            </section>
-            <section class="block">
-              <h2>Recognition</h2>
-              <ul>{resume.recognition.map((r) => <li>{r}</li>)}</ul>
-            </section>
-            <section class="block">
-              <h2>Writing</h2>
-              <ul>{resume.writing.map((r) => <li>{r}</li>)}</ul>
-            </section>
-          </aside>
-        </div>
+        <section>
+          <h2>Interests</h2>
+          <dl class="kv">
+            {resume.interests.map((s) => (<><dt>{s.k}</dt><dd>{s.v}</dd></>))}
+          </dl>
+        </section>
       </article>
     </div>
   </div>
@@ -126,189 +91,186 @@ const location = facts.find((f) => f.k === 'Based in')?.v;
     padding-top: 110px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 18px;
   }
   .bar {
+    width: 100%;
+    max-width: 880px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
-  }
-  .bar-actions {
-    display: flex;
-    flex-wrap: wrap;
     gap: 10px;
   }
   .bar .pill {
     background: rgba(8, 26, 82, 0.6);
   }
 
-  /* The document: calm, solid and readable, like paper on a dark desk */
-  .doc {
-    background: rgba(9, 24, 74, 0.9);
-    border: var(--glass-border);
-    box-shadow: var(--glass-shadow);
-    border-radius: var(--radius);
-    padding: 56px 60px;
-    margin-bottom: 48px;
-    font-size: 18px;
-    line-height: 1.55;
+  /* A plain sheet of paper: what a recruiter expects to see */
+  .sheet {
+    width: 100%;
+    max-width: 880px;
+    margin-bottom: 56px;
+    padding: 56px 64px 64px;
+    background: #fdfcf9;
+    color: #1a1a1a;
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(2, 8, 34, 0.6);
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.45;
     animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
-  .doc-head {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 20px;
-    padding-bottom: 24px;
-    border-bottom: 2px solid var(--red);
+  .sheet a {
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+  .sheet a:hover {
+    text-decoration: underline;
+  }
+  .sheet :focus-visible {
+    outline-color: #22539f;
+  }
+  .top {
+    text-align: center;
+    padding-bottom: 14px;
   }
   h1 {
-    font-size: clamp(40px, 5vw, 58px);
-    letter-spacing: 0.04em;
+    font-family: var(--display);
+    font-size: 36px;
+    letter-spacing: 0.06em;
+    color: #111;
   }
-  .headline {
-    font-style: italic;
-    color: var(--text-2);
-    font-size: 20px;
-    margin-top: 6px;
+  .degree {
+    margin-top: 4px;
+    font-size: 17px;
   }
   .contact {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    text-align: right;
-    font-size: 17px;
-    color: var(--text-2);
-  }
-  .block {
-    margin-top: 30px;
+    margin-top: 4px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 10px;
+    font-size: 15.5px;
+    color: #333;
+  }
+  section {
+    margin-top: 18px;
   }
   h2 {
+    font-family: var(--display);
     font-size: 15px;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gold);
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(201, 206, 216, 0.3);
+    color: #0f2a6b;
+    padding-bottom: 3px;
+    border-bottom: 1.5px solid #0f2a6b;
+    margin-bottom: 8px;
   }
-  h3 {
-    font-size: 20px;
-    line-height: 1.3;
+  .edu {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15.5px;
   }
-  .figures {
-    list-style: none;
-    margin: 28px 0 0;
-    padding: 18px 0;
-    border-top: 1px solid rgba(201, 206, 216, 0.3);
-    border-bottom: 1px solid rgba(201, 206, 216, 0.3);
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
-    font-size: 16px;
-    color: var(--text-2);
+  .edu th {
+    text-align: left;
+    font-weight: 500;
+    background: #eef0f5;
+    padding: 4px 8px;
   }
-  .figures b {
-    display: block;
-    font: 32px/1.1 var(--display);
-    color: #fff;
+  .edu td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #e3e5ea;
   }
-  .cols {
-    display: grid;
-    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
-    gap: 48px;
+  .edu th:last-child,
+  .edu td:last-child {
+    text-align: right;
+    white-space: nowrap;
   }
-  .item {
-    padding: 8px 0 14px;
+  .entry + .entry {
+    margin-top: 10px;
   }
-  .item + .item {
-    border-top: 1px dashed rgba(201, 206, 216, 0.22);
-    padding-top: 16px;
-  }
-  .item-head {
+  .row {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 16px;
   }
-  .org {
-    display: block;
-    font: italic 17px/1.4 var(--body);
-    color: var(--text-3);
+  h3 {
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.3;
+    color: #111;
   }
   .when {
     flex: none;
     font-size: 15px;
-    color: var(--text-3);
-    font-variant-numeric: tabular-nums;
+    color: #333;
   }
-  .item ul,
-  .side ul {
-    margin: 8px 0 0;
+  .sub {
+    font-style: italic;
+    font-size: 15.5px;
+    color: #444;
+  }
+  ul {
+    margin: 3px 0 0;
     padding-left: 20px;
   }
-  .item li,
-  .side li {
-    margin: 4px 0;
-    color: #eef2fb;
+  li {
+    margin: 2px 0;
   }
-  .item li::marker,
-  .side li::marker {
-    color: var(--red-hi);
+  .kv {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 3px 14px;
   }
-  .compact p {
-    color: var(--text-2);
-    margin-top: 4px;
+  .kv dt {
+    font-weight: 500;
   }
-  .edu,
-  .skill {
-    padding-bottom: 8px;
-  }
-  .edu p,
-  .skill p {
-    color: var(--text-2);
-  }
-  .skill h3,
-  .edu h3 {
-    font-size: 18px;
+  .kv dd {
+    margin: 0;
   }
 
-  @media (max-width: 1040px) {
-    .cols {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 0;
-    }
-    .figures {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
   @media (max-width: 760px) {
     .col {
       padding-top: 84px;
     }
-    .doc {
-      padding: 28px 20px;
+    .sheet {
+      padding: 28px 18px 32px;
+      font-size: 15.5px;
     }
-    .contact {
-      text-align: left;
+    h1 {
+      font-size: 28px;
     }
-    .item-head {
+    .row {
       flex-direction: column;
-      gap: 2px;
+      gap: 0;
+    }
+    .kv {
+      grid-template-columns: 1fr;
+    }
+    .kv dd {
+      margin-bottom: 6px;
+    }
+    .edu {
+      font-size: 14px;
+    }
+    .edu th,
+    .edu td {
+      padding: 4px 5px;
     }
   }
 
-  /* Printing gives a clean, black-on-white one-column-header résumé */
   @media print {
+    @page {
+      size: A4;
+      margin: 10mm 12mm;
+    }
     :global(body) {
       background: #fff !important;
-      color: #111 !important;
-      font-size: 11pt;
     }
     :global(.nav-shell),
     :global(.skip),
@@ -319,35 +281,58 @@ const location = facts.find((f) => f.k === 'Based in')?.v;
     .col {
       padding: 0;
     }
-    .doc {
-      background: #fff;
-      border: 0;
-      box-shadow: none;
+    .sheet {
+      max-width: none;
       padding: 0;
-      color: #111;
+      margin: 0;
+      box-shadow: none;
+      background: #fff;
       animation: none;
-      font-size: 10.5pt;
+      font-size: 9pt;
+      line-height: 1.24;
     }
-    .doc :is(h1, h3, li, b, p, .headline, .contact, .org, .when, .figures) {
-      color: #111 !important;
+    h1 {
+      font-size: 20pt;
     }
     h2 {
-      color: #8a1d10 !important;
-      border-color: #999;
+      font-size: 9.5pt;
+      margin-bottom: 4px;
     }
-    a {
-      color: #111;
-      text-decoration: none;
+    h3 {
+      font-size: 10pt;
     }
-    .cols {
-      grid-template-columns: 1.7fr 1fr;
-      gap: 28px;
+    section {
+      margin-top: 7px;
     }
-    .figures {
-      grid-template-columns: repeat(4, 1fr);
-      border-color: #999;
+    .kv {
+      grid-template-columns: 120px 1fr;
+      gap: 1px 10px;
     }
-    .item {
+    .page,
+    :global(main) {
+      min-height: 0 !important;
+    }
+    .degree,
+    .contact,
+    .sub,
+    .when,
+    .edu {
+      font-size: 9pt;
+    }
+    .top {
+      padding-bottom: 4px;
+    }
+    .entry + .entry {
+      margin-top: 5px;
+    }
+    li {
+      margin: 0;
+    }
+    .edu th,
+    .edu td {
+      padding: 2px 6px;
+    }
+    .entry {
       break-inside: avoid;
     }
   }

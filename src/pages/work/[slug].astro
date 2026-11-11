@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Painting from '../../components/Painting.astro';
 import ProjectCover from '../../components/ProjectCover.astro';
 import Plate from '../../components/Plate.astro';
-import { projects, lensLabels, type Project } from '../../data/projects';
+import { projects, lensLabels, statusLabels, type Project } from '../../data/projects';
 import { site } from '../../data/site';
 
 export function getStaticPaths() {
@@ -27,7 +27,7 @@ const letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ'];
 
       <header class="glass strong pad intro">
         <div class="intro-text">
-          <p class="eyebrow">{project.status === 'shipped' ? 'Shipped and measured' : 'Blueprint · in progress'}</p>
+          <p class="eyebrow">{statusLabels[project.status]}</p>
           <h1>{project.title}</h1>
           <p class="lede">{project.summary}</p>
           <dl class="meta">
@@ -35,25 +35,13 @@ const letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ'];
             <div><dt>Discipline</dt><dd>{project.discipline}</dd></div>
             <div><dt>When</dt><dd>{project.year}</dd></div>
             <div><dt>Lenses</dt><dd>{project.lenses.map((l) => lensLabels[l]).join(' · ')}</dd></div>
+            {project.stack && <div><dt>Tools</dt><dd>{project.stack.join(' · ')}</dd></div>}
           </dl>
         </div>
         <div class="intro-cover">
           <ProjectCover project={project} index={index} large />
         </div>
       </header>
-
-      {
-        project.metrics && (
-          <ul class="glass metrics" aria-label="In numbers">
-            {project.metrics.map((m) => (
-              <li>
-                <span class="num">{m.value}</span>
-                <span class="label">{m.label}</span>
-              </li>
-            ))}
-          </ul>
-        )
-      }
 
       <section class="glass strong pad block" aria-labelledby="brief">
         <h2 id="brief">The brief</h2>
@@ -101,15 +89,8 @@ const letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ'];
       }
 
       <section class="glass strong pad block outcome" aria-labelledby="outcome">
-        <h2 id="outcome">{project.status === 'shipped' ? 'The outcome' : 'Where it stands'}</h2>
+        <h2 id="outcome">{project.status === 'lab' ? 'Where it stands' : 'The outcome'}</h2>
         <p class="lede">{project.outcome}</p>
-        {
-          project.partners && (
-            <ul class="partners" aria-label="Partners">
-              {project.partners.map((p) => <li class="chip">{p}</li>)}
-            </ul>
-          )
-        }
       </section>
 
       <nav class="glass pager" aria-label="More projects">

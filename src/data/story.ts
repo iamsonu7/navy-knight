@@ -35,12 +35,12 @@ export const chapters: Chapter[] = [
   {
     id: 'jnv',
     numeral: 'II',
-    kicker: 'Jawahar Navodaya Vidyalaya · Class 6 to 12',
+    kicker: 'Jawahar Navodaya Vidyalaya · Class 6 to 10',
     title: 'Leaving home at eleven',
     paragraphs: [
-      'At eleven I left home for Jawahar Navodaya Vidyalaya, a residential school, and lived in a hostel from Class 6 all the way to Class 12. For a child that age it is a big change. You learn to wake yourself up, look after your own things, settle your own arguments and handle your own homesickness, because there is nobody else whose job it is to do it for you.',
+      'At eleven I left home for Jawahar Navodaya Vidyalaya, a residential school, and lived in its hostel from Class 6 to Class 10. For a child that age it is a big change. You learn to wake yourself up, look after your own things, settle your own arguments and handle your own homesickness, because there is nobody else whose job it is to do it for you.',
       'Navodaya also puts you in a room with students from very different villages and backgrounds. You learn quickly that people think differently, and that getting something done with a group depends far more on trust and clarity than on who is the smartest person present.',
-      'Those seven years gave me something I lean on all the time now: I am comfortable being new, in unfamiliar places, without a map. When I do not know how something works, my first instinct is not to wait for someone to teach me. It is to start figuring it out.',
+      'Those five years gave me something I lean on all the time now: I am comfortable being new, in unfamiliar places, without a map. When I do not know how something works, my first instinct is not to wait for someone to teach me. It is to start figuring it out.',
     ],
   },
   {
@@ -49,7 +49,7 @@ export const chapters: Chapter[] = [
     kicker: 'Kota, Rajasthan',
     title: 'Kota, and a choice',
     paragraphs: [
-      'After school I went to Kota on a scholarship to prepare for engineering entrances. Kota is intense in a very particular way: everyone around you is measuring themselves by one number, and it is easy to start believing that number is the whole of you.',
+      'After Class 10, I went to Kota on a scholarship to prepare for engineering entrances. Kota is intense in a very particular way: everyone around you is measuring themselves by one number, and it is easy to start believing that number is the whole of you.',
       'When results came, I had a decision to make. I could join IIT Jammu straight away, or spend another year preparing to chase a different institutional name. I chose to start. My reasoning was simple, and I still believe it: a year spent building things, shipping work and learning from real people compounds. A year spent chasing a label mostly just delays the start.',
       'I do not say that to look down on anyone who chose differently. It was the right call for me, and it is the reason everything else on this site exists.',
     ],
@@ -87,25 +87,12 @@ export const chapters: Chapter[] = [
     kicker: 'Budding Entrepreneurs Club',
     title: 'Running a club, and learning on the job',
     paragraphs: [
-      'This year I am looking after the Budding Entrepreneurs Club (BEC) at IIT Jammu. I want to be honest about what that is: a student club role, one of many on campus, held for a year. It is a chance to practise, not a destination. What I care about is whether the things we run are actually useful to the students who show up.',
-      'The club had a large committee of around twenty-eight people, and in practice that meant nobody was quite sure who owned what. We moved to a small core of five people we call the Captains, each clearly responsible for an area. It is not a perfect structure, but decisions now have owners, and things move faster.',
-      'I also built the club a proper visual system, because a club that looks different in every post is hard to trust. A clear type scale (Sora, Manrope and Inter), a fixed palette, a couple of graphic patterns cut from the logo, and reusable templates so that anyone on the team can make something on-brand without me.',
-      'With the team, we set up a partnership with E-Cell / NEC IIT Bombay, which gave our events a credibility a young club could not have built on its own. We ran Investi-Case ’26, a corporate-crisis case competition with a live boardroom round where AI tools were not allowed. It drew 306 registered participants from 74 institutions, including seven IITs and six IIMs, and the community around it has grown to roughly five hundred people. Behind the scenes, Apps Script handled registrations, Round 2 scheduling across volunteer slots, and certificates. We also ran a Founders Forum in September 2026 by cold-messaging founders, and I wrote and designed the first chapter of a BEC Design Thinking Handbook.',
-      'None of this makes me someone special. It has mostly taught me how much I still have to learn about people, timelines and follow-through.',
+      'This year I am helping run the Budding Entrepreneurs Club (BEC) at IIT Jammu. I want to be honest about what that is: a student club role, one of many on campus, held for a year. It is a place to practise, not a destination, and most of what happens there is the work of a team.',
+      'The club had a large committee, and in practice that meant nobody was quite sure who owned what. We moved to a small core of five people, each clearly responsible for an area. It is not perfect, but decisions now have owners.',
+      'My own contributions have mostly been the ones I am suited to. I designed the club a proper visual system, because a club that looks different in every post is hard to recognise: a type scale, a fixed palette, patterns cut from the logo, and templates so others can make things without waiting on me. For Investi-Case ’26, the case competition the team ran, I worked on the format (including a live boardroom round where AI tools were not allowed), the identity, and the Apps Script automation behind registrations, scheduling and certificates. I also wrote and designed the first chapter of a BEC Design Thinking Handbook, and helped reach out to founders for a Founders Forum in September 2026.',
+      'Mostly, it has taught me how much I still have to learn about people, timelines and follow-through.',
     ],
     plate: { name: 'moon', numeral: 'V' },
-  },
-  {
-    id: 'learning',
-    numeral: 'VII',
-    kicker: 'An honest note',
-    title: 'What I am still learning',
-    paragraphs: [
-      'I am good at seeing the shape of a big idea and drawing the plan for it. ForgeX, the Big Idea Cohort, the frameworks in my notebooks: I enjoy that part. The harder part, and the part I am working on, is carrying plans all the way to something real people use, measuring what happens, and then improving it. Investi-Case is the one project where I have really done the full loop so far. I want more of my work to look like that.',
-      'I also have a habit of starting too many things at once, because I can design, write a script, pitch a sponsor and draft a strategy, and all of them feel urgent. I am trying to pick one or two things each semester and finish them properly.',
-      'And I am learning to delegate. Shrinking a team is easy. Writing things down clearly enough that other people can do the work well without me in every detail is much harder, and it is the skill I most want to have by the end of this year.',
-    ],
-    quote: 'Shrinking a team is easy. Writing things down so others can run it is the hard part.',
   },
   {
     id: 'desk',
@@ -127,6 +114,18 @@ export const chapters: Chapter[] = [
       'Value over cost: I would rather spend more on something that returns more than save money on something that does nothing. Execution over labels: a title or a college name means little next to work you can open and numbers you can check. First principles over templates: before automating or redesigning a process, understand why it exists. Clarity over decoration: in a poster or in an org chart, every element has to earn its place. Creation over consumption: build handbooks, pipelines and frameworks, not only notes.',
       'I do not always live up to these. Writing them down is how I hold myself to them.',
     ],
+  },
+  {
+    id: 'learning',
+    numeral: 'VII',
+    kicker: 'An honest note',
+    title: 'What I am still learning',
+    paragraphs: [
+      'I am good at seeing the shape of a big idea and drawing the plan for it. ForgeX, the Big Idea Cohort, the frameworks in my notebooks: I enjoy that part. The harder part, and the part I am working on, is carrying plans all the way to something real people use, measuring what happens, and then improving it. Investi-Case is the one project where I have really done the full loop so far. I want more of my work to look like that.',
+      'I also have a habit of starting too many things at once, because I can design, write a script, pitch a sponsor and draft a strategy, and all of them feel urgent. I am trying to pick one or two things each semester and finish them properly.',
+      'And I am learning to delegate. Shrinking a team is easy. Writing things down clearly enough that other people can do the work well without me in every detail is much harder, and it is the skill I most want to have by the end of this year.',
+    ],
+    quote: 'Shrinking a team is easy. Writing things down so others can run it is the hard part.',
   },
   {
     id: 'next',

@@ -1,11 +1,14 @@
 ---
 import Painting from './Painting.astro';
 import ProjectCard from './ProjectCard.astro';
-import { projects, lensLabels, type Lens } from '../data/projects';
+import { projects, lensLabels, statusLabels, type Lens, type Status } from '../data/projects';
 import { explorations } from '../data/site';
 
-const shipped = projects.filter((p) => p.status === 'shipped');
-const labs = projects.filter((p) => p.status === 'lab');
+const groups: { status: Status; note: string }[] = [
+  { status: 'own', note: 'Things I designed or built myself.' },
+  { status: 'team', note: 'Team efforts where I shaped part of the work.' },
+  { status: 'lab', note: 'Ideas and work that are not finished yet.' },
+];
 const lenses = Object.keys(lensLabels) as Lens[];
 ---
 <section class="section" id="works" aria-labelledby="works-title">
@@ -14,8 +17,8 @@ const lenses = Object.keys(lensLabels) as Lens[];
     <div class="head">
       <div class="glass head-panel">
         <p class="eyebrow">Selected works</p>
-        <h2 class="h2" id="works-title">Numbers first, adjectives never</h2>
-        <p class="lede">What has shipped and been measured, kept apart from what is still a blueprint.</p>
+        <h2 class="h2" id="works-title">What I have been making</h2>
+        <p class="lede">What I made myself, what I helped a team make, and what is still on the bench, kept clearly apart.</p>
       </div>
       <div class="glass lens-bar" role="group" aria-label="Filter by lens">
         <span class="lens-label">Look through</span>
@@ -25,19 +28,20 @@ const lenses = Object.keys(lensLabels) as Lens[];
     </div>
     <p class="sr-only" aria-live="polite" data-lens-status></p>
 
-    <div class="group" data-group>
-      <h3 class="group-title"><span class="dot shipped" aria-hidden="true"></span>Shipped and measured</h3>
-      <div class="cards">
-        {shipped.map((p) => <ProjectCard project={p} index={projects.indexOf(p)} />)}
-      </div>
-    </div>
-
-    <div class="group" data-group>
-      <h3 class="group-title"><span class="dot lab" aria-hidden="true"></span>Blueprints and labs</h3>
-      <div class="cards">
-        {labs.map((p) => <ProjectCard project={p} index={projects.indexOf(p)} />)}
-      </div>
-    </div>
+    {
+      groups.map((g) => (
+        <div class="group" data-group>
+          <h3 class="group-title">
+            <span class:list={['dot', g.status]} aria-hidden="true"></span>
+            {statusLabels[g.status]}
+            <span class="group-note">{g.note}</span>
+          </h3>
+          <div class="cards">
+            {projects.filter((p) => p.status === g.status).map((p) => <ProjectCard project={p} index={projects.indexOf(p)} />)}
+          </div>
+        </div>
+      ))
+    }
 
     <div class="glass strong pad desk">
       <h3>Also on the desk</h3>
@@ -96,6 +100,7 @@ const lenses = Object.keys(lensLabels) as Lens[];
   }
   .group-title {
     align-self: flex-start;
+    flex-wrap: wrap;
     display: inline-flex;
     align-items: center;
     gap: 12px;
@@ -112,7 +117,15 @@ const lenses = Object.keys(lensLabels) as Lens[];
     height: 10px;
     border-radius: 50%;
   }
-  .dot.shipped {
+  .group-note {
+    font: italic 17px var(--body);
+    color: var(--text-2);
+    margin-left: 4px;
+  }
+  .dot.team {
+    background: var(--silver);
+  }
+  .dot.own {
     background: var(--gold);
     box-shadow: 0 0 10px var(--gold);
   }

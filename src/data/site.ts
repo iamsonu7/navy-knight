@@ -20,12 +20,20 @@ export const site = {
   socials: [{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/sonu-patidar/' }],
 };
 
-export const metrics = [
-  { value: 74, suffix: '', label: 'institutions reached', note: 'Investi-Case ’26, incl. 7 IITs and 6 IIMs' },
-  { value: 306, suffix: '', label: 'registered participants', note: 'Investi-Case ’26' },
-  { value: 412, suffix: '', label: 'companies in one automated pipeline', note: 'Built in 5 days' },
-  { value: 11, suffix: '/11', label: 'food vendors closed', note: 'As a first-year volunteer' },
-  { value: 5, suffix: '', label: 'captains, down from 28', note: 'BEC restructure' },
+// The three things I work on: shown under the hero.
+export const focus = [
+  {
+    name: 'Business',
+    text: 'Sponsorship, partnerships, positioning and how small organisations are structured.',
+  },
+  {
+    name: 'AI and automation',
+    text: 'Google Apps Script and LLM pipelines that take repetitive work off people’s hands.',
+  },
+  {
+    name: 'Design',
+    text: 'Brand systems, event identities and type and colour that hold together everywhere.',
+  },
 ];
 
 export const facts = [
@@ -50,7 +58,7 @@ export const path = [
     letter: 'Β',
     place: 'Jawahar Navodaya Vidyalaya',
     label: 'Away at 11',
-    text: 'Left home at eleven for JNV and lived in a hostel from Class 6 to 12. Years of unfamiliar places built a habit of self-reliance.',
+    text: 'Left home at eleven for Jawahar Navodaya Vidyalaya and lived in its hostel from Class 6 to 10. Years of unfamiliar places built a habit of self-reliance.',
   },
   {
     id: 'kota',
@@ -78,7 +86,7 @@ export const path = [
     letter: 'Ζ',
     place: 'Budding Entrepreneurs Club',
     label: 'Where I am now',
-    text: 'Looking after the Budding Entrepreneurs Club this year. So far: a smaller core team of five, a brand system, and a partnership with E-Cell IIT Bombay. Still early, still learning how to run things well.',
+    text: 'Helping run the Budding Entrepreneurs Club this year: a smaller core team of five, a brand system, and events like Investi-Case. Still early, still learning how to run things well.',
   },
   {
     id: 'next',
@@ -118,7 +126,6 @@ export const craft = {
   recognition: [
     'Faculty commendation for the sponsorship automation engine',
     'Partners closed: J&K Bank, Dabur, Scaleon',
-    'Institutional partnership with E-Cell IIT Bombay',
   ],
   process: [
     { letter: 'Α', name: 'Deconstruct', text: 'Find the real bottleneck and why the old way exists.' },
